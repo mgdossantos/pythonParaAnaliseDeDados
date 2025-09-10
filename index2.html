@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python para Análise de Dados - Curso Intermediário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .navbar-fixed {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .section-padding {
+            padding: 5rem 0;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 navbar-fixed border-b border-gray-200">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-purple-600">
+                    Python Análise de Dados
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-gray-700 hover:text-purple-600 transition-colors">Início</a>
+                    <a href="#sobre" class="text-gray-700 hover:text-purple-600 transition-colors">Sobre</a>
+                    <a href="#conteudo" class="text-gray-700 hover:text-purple-600 transition-colors">Conteúdo</a>
+                    <a href="#professora" class="text-gray-700 hover:text-purple-600 transition-colors">Professora</a>
+                    <a href="#investimento" class="text-gray-700 hover:text-purple-600 transition-colors">Investimento</a>
+                </div>
+                <button class="md:hidden text-gray-700">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="gradient-bg text-white section-padding pt-32">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    Domine a Análise de Dados com <span class="text-yellow-300">Python</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-blue-100">
+                    Aprenda a manipular datasets reais, automatizar relatórios e criar dashboards interativos — tudo isso na prática!
+                </p>
+                <p class="text-lg mb-12 text-blue-200">
+                    O curso ideal para quem já conhece o básico de Python e quer dar o próximo passo na carreira.
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div class="flex items-center justify-center mb-2">
+                            <i data-lucide="calendar" class="w-6 h-6 mr-2"></i>
+                        </div>
+                        <p class="font-semibold">Início da Turma</p>
+                        <p class="text-yellow-300">08/10/2025 (Quartas-Feira) às 19h BR  </p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div class="flex items-center justify-center mb-2">
+                            <i data-lucide="clock" class="w-6 h-6 mr-2"></i>
+                        </div>
+                        <p class="font-semibold">Duração</p>
+                        <p class="text-yellow-300">8 semanas • 2h/semana</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div class="flex items-center justify-center mb-2">
+                            <i data-lucide="monitor" class="w-6 h-6 mr-2"></i>
+                        </div>
+                        <p class="font-semibold">Formato</p>
+                        <p class="text-yellow-300">100% Online + Gravado</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                        <div class="flex items-center justify-center mb-2">
+                            <i data-lucide="trending-up" class="w-6 h-6 mr-2"></i>
+                        </div>
+                        <p class="font-semibold">Nível</p>
+                        <p class="text-yellow-300">Intermediário</p>
+                    </div>
+                </div>
+
+                <button onclick="openGoogleForm()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xl px-12 py-4 rounded-full transition-all duration-300 transform hover:scale-105 pulse-animation">
+                    Quero me inscrever agora 🚀
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Para Quem é Este Curso -->
+    <section id="sobre" class="section-padding bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Para quem é este curso?</h2>
+                <p class="text-xl text-gray-600">Este curso é perfeito para você se...</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto fade-in">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 card-hover p-4 rounded-lg">
+                            <div class="bg-green-500 text-white rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2">Já conhece Python básico</h3>
+                                <p class="text-gray-600">Você sabe variáveis, loops, funções e estruturas de dados básicas</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 card-hover p-4 rounded-lg">
+                            <div class="bg-green-500 text-white rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2">Trabalha com dados no dia a dia</h3>
+                                <p class="text-gray-600">Usa Excel, planilhas ou precisa analisar informações regularmente</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 card-hover p-4 rounded-lg">
+                            <div class="bg-green-500 text-white rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2">Quer automatizar tarefas</h3>
+                                <p class="text-gray-600">Cansou de fazer relatórios manuais e quer otimizar seu tempo</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 card-hover p-4 rounded-lg">
+                            <div class="bg-green-500 text-white rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2">Busca crescimento profissional</h3>
+                                <p class="text-gray-600">Quer se destacar no mercado com habilidades em análise de dados</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 card-hover p-4 rounded-lg">
+                            <div class="bg-green-500 text-white rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2">Prefere aprender na prática</h3>
+                                <p class="text-gray-600">Gosta de projetos reais e aplicação imediata do conhecimento</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 card-hover p-4 rounded-lg">
+                            <div class="bg-green-500 text-white rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800 mb-2">Quer criar visualizações</h3>
+                                <p class="text-gray-600">Deseja fazer gráficos e dashboards profissionais para apresentações</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto fade-in">
+                <h2 class="text-3xl font-bold mb-4">Pronto para transformar sua carreira?</h2>
+                <p class="text-xl mb-8 text-purple-100">
+                    Junte-se a centenas de profissionais que já dominam Python para análise de dados
+                </p>
+                <button onclick="openGoogleForm()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xl px-12 py-4 rounded-full transition-all duration-300 transform hover:scale-105 pulse-animation">
+                    Garantir Minha Vaga Agora! 🚀
+                </button>
+                <p class="text-sm text-purple-200 mt-4">
+                    ⏰ Vagas limitadas • Início em 06/10/2025
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais Section -->
+    <section class="section-padding bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Por que fazer este curso?</h2>
+                <p class="text-xl text-gray-600">Destaques que fazem a diferença na sua jornada</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto fade-in">
+                <div class="card-hover bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-green-500 text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">Aulas Gravadas</h3>
+                    <p class="text-gray-600">Assista quantas vezes quiser, no seu ritmo e horário</p>
+                </div>
+
+                <div class="card-hover bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-green-500 text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">100% Prático</h3>
+                    <p class="text-gray-600">Mini-projetos em todas as aulas para aplicar o conhecimento imediatamente</p>
+                </div>
+
+                <div class="card-hover bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-green-500 text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">Manipulação Excel</h3>
+                    <p class="text-gray-600">Pandas e openpyxl para trabalhar com planilhas profissionalmente</p>
+                </div>
+
+                <div class="card-hover bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-green-500 text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">Automação</h3>
+                    <p class="text-gray-600">Automatize tarefas repetitivas e relatórios do dia a dia</p>
+                </div>
+
+                <div class="card-hover bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-green-500 text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">Dashboards Interativos</h3>
+                    <p class="text-gray-600">Matplotlib, Seaborn e Plotly para visualizações profissionais</p>
+                </div>
+
+                <div class="card-hover bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-green-500 text-3xl mb-4">✅</div>
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">Projeto Final</h3>
+                    <p class="text-gray-600">Projeto integrador para seu portfólio profissional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Conteúdo Programático -->
+    <section id="conteudo" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Conteúdo Programático</h2>
+                <p class="text-xl text-gray-600">8 módulos práticos com projetos reais</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto fade-in">
+                <div class="space-y-6">
+                    <div class="card-hover bg-white border-l-4 border-blue-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 1 — Introdução à Análise de Dados</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Revisão rápida do básico de Python</li>
+                            <li>• Configuração do Google Colab</li>
+                            <li>• Fluxo completo de análise de dados</li>
+                            <li class="font-semibold text-blue-600">🎯 Mini-projeto: Carregar e analisar um dataset CSV</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-green-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 2 — Fundamentos do NumPy</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Criação e manipulação de arrays</li>
+                            <li>• Indexação, slicing e operações vetorizadas</li>
+                            <li>• Funções estatísticas básicas</li>
+                            <li class="font-semibold text-green-600">🎯 Mini-projeto: Analisar notas de alunos com NumPy</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-purple-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 3 — Pandas: Manipulação de Dados</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Estruturas Series e DataFrame</li>
+                            <li>• Importação e exportação de dados (CSV, Excel, JSON)</li>
+                            <li>• Seleção, filtragem, ordenação e agrupamento</li>
+                            <li class="font-semibold text-purple-600">🎯 Mini-projeto: Criar relatório de vendas usando Pandas</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-orange-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 4 — Manipulação de Planilhas e Arquivos</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Leitura e escrita de planilhas Excel</li>
+                            <li>• Automação com openpyxl e os</li>
+                            <li>• Consolidar várias planilhas em um único relatório</li>
+                            <li class="font-semibold text-orange-600">🎯 Mini-projeto: Relatório consolidado de diferentes meses</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-teal-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 5 — Automação de Tarefas Repetitivas</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Automação de relatórios com Pandas e Excel</li>
+                            <li>• Envio automático de relatórios por email</li>
+                            <li>• Download e upload de arquivos</li>
+                            <li class="font-semibold text-teal-600">🎯 Mini-projeto: Script que gera e envia relatórios por email</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-pink-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 6 — Visualização de Dados e Dashboard</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Introdução ao Matplotlib e Seaborn</li>
+                            <li>• Gráficos de linha, barra, pizza e dispersão</li>
+                            <li>• Heatmaps, boxplots e dashboards básicos</li>
+                            <li class="font-semibold text-pink-600">🎯 Mini-projeto: Dashboard interativo com métricas chave</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-indigo-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 7 — Estatística Aplicada à Análise de Dados</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Medidas de tendência central e dispersão</li>
+                            <li>• Correlação e covariância</li>
+                            <li>• Identificação de outliers e anomalias</li>
+                            <li class="font-semibold text-indigo-600">🎯 Mini-projeto: Identificar padrões em dataset real</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-hover bg-white border-l-4 border-yellow-500 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Módulo 8 — Projeto Final Integrador</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li>• Escolha de um dataset real</li>
+                            <li>• Aplicar limpeza, manipulação e automação</li>
+                            <li>• Criar gráficos, dashboards e relatórios</li>
+                            <li class="font-semibold text-yellow-600">🎯 Apresentar o notebook final para a turma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conheça sua Professora -->
+    <!-- Sobre a Professora -->
+    <section  id="professora" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Sobre a Professora</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-lg shadow-lg">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-32 h-32 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full flex items-center justify-center text-white text-4xl font-bold">
+                           <img src="./images/marcela.jpg" alt="Marcela dos Santos" class="w-32 h-32 rounded-full object-cover shadow-lg mb-4 border-4 border-blue-100">
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Dra. Marcela dos Santos</h3>
+                            <p class="text-lg text-gray-600 mb-4">
+                                Professora de computação com 14+ anos de experiência, tendo lecionado no Brasil e no Canadá.
+                                Doutoranda em Ciência da Computação (UQAC, Canadá), onde aplica Python na pesquisa em testes
+                                de software para sistemas robóticos. Autora de publicações científicas e participante de
+                                iniciativas educacionais com empresas como Intel e Google.
+                            </p>
+                            <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <h4 class="font-semibold text-purple-700 mb-2">Formação & Pesquisa:</h4>
+                                    <ul class="text-gray-600 space-y-1">
+                                        <li>• Engenheira de Computação</li>
+                                        <li>• M.Sc. em Engenharia Elétrica</li>
+                                        <li>• Doutoranda em Ciência da Computação (UQAC)</li>
+                                        <li>• Pesquisa em testes de software para robôs</li>
+                                        <li>• Projetos com Intel e Google</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-700 mb-2">Experiência Docente:</h4>
+                                    <ul class="text-gray-600 space-y-1">
+                                        <li>• 14+ anos ensinando no Brasil e Canadá</li>
+                                        <li>• Universidades e cursos livres</li>
+                                        <li>• Metodologia prática com dados reais</li>
+                                        <li>• Python aplicado à pesquisa</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      <!-- Materiais Bônus -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Materiais & Bônus</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover">
+                    <div class="text-3xl mb-3">📂</div>
+                    <h3 class="font-semibold mb-2">Kit de Automação</h3>
+                    <p class="text-gray-600 text-sm">Scripts prontos para gerar relatórios e consolidar planilhas.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover">
+                    <div class="text-3xl mb-3">📊</div>
+                    <h3 class="font-semibold mb-2">Template</h3>
+                    <p class="text-gray-600 text-sm">Modelo de dashboard interativo em Plotly e Seaborn.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover">
+                    <div class="text-3xl mb-3">✅</div>
+                    <h3 class="font-semibold mb-2">Checklist</h3>
+                    <p class="text-gray-600 text-sm">Fluxo completo de análise: limpeza → manipulação → visualização.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover">
+                    <div class="text-3xl mb-3">📚</div>
+                    <h3 class="font-semibold mb-2">Dicionário</h3>
+                    <p class="text-gray-600 text-sm">Guia rápido com os principais métodos do Pandas e NumPy.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button onclick="openGoogleForm()" class="bg-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-purple-700 transition duration-300 shadow-lg">
+                    Inscreva-se Agora
+                </button>
+                <p class="mt-3 text-gray-600">🗓️ Início: 06 de Outubro 20h (Brasília)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preços -->
+    <section id="investimento" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Investimento</h2>
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-lg shadow-lg text-center">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Curso Completo - 6 Semanas</h3>
+                        <p class="text-gray-600">Acesso a todas as aulas, materiais e suporte</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="text-3xl mb-2">🇧🇷</div>
+                            <h4 class="text-lg font-semibold text-gray-700 mb-2">Brasil</h4>
+                            <div class="text-3xl font-bold text-purple-600">R$ 624</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="text-3xl mb-2">🇨🇦</div>
+                            <h4 class="text-lg font-semibold text-gray-700 mb-2">Canadá</h4>
+                            <div class="text-3xl font-bold text-purple-600">CA$ 156</div>
+                        </div>
+                    </div>
+
+                    <div class="text-sm text-gray-600 mb-6">
+                        <p>✓ 8 semanas de conteúdo prático (2h/semana)</p>
+                        <p>✓ Plantão integrado na Semana 3</p>
+                        <p>✓ Todos os materiais e bônus inclusos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-4">Pronto para começar sua jornada?</h2>
+            <p class="text-xl mb-8 opacity-90">
+                Aprenda Python de forma prática, sem pressão, focado em resultados reais para pesquisa
+            </p>
+            <button onclick="openGoogleForm()" class="bg-white text-purple-600 px-10 py-4 rounded-lg font-bold text-xl hover:bg-gray-100 transition duration-300 shadow-lg">
+                Inscreva-se Agora
+            </button>
+            <p class="mt-4 opacity-75">Ministrado por pesquisadora • Experiência real • Foco prático</p>
+        </div>
+    </section>
+
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+         // Google Form integration
+        function openGoogleForm() {
+            window.open('https://forms.gle/kvcUManT4kPK5B4n8', '_blank');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click animations
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+
+                console.log('Redirecionando para página de inscrição...');
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97cab4be30c6a2b0',t:'MTc1NzQ2MzA2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
