@@ -15,6 +15,14 @@
       --shadow: 0 4px 28px rgba(30,58,138,0.10);
       --gradient: linear-gradient(120deg, var(--main-red) 60%, var(--main-blue) 100%);
     }
+    html {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-size: 100%;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
     body {
       background: var(--main-bg);
       margin: 0;
@@ -345,6 +353,15 @@
       box-shadow: 0 -2px 13px rgba(231,76,60,0.09);
     }
 
+    /* Responsividade */
+    @media (max-width: 1200px) {
+      .container { max-width: 95vw; }
+      .about-section, .price-section { max-width: 98vw; }
+    }
+    @media (max-width: 1024px) {
+      .header-title { font-size: 3rem; }
+      .about-section, .price-section { max-width: 99vw; }
+    }
     @media (max-width: 800px) {
       .cards, .bonus-cards, .about-content, .price-cards { flex-direction: column; }
       .container { padding: 0 0.3rem;}
@@ -353,6 +370,37 @@
       .price-section { padding: 1.2rem 0.6rem;}
       section { padding: 2.2rem 0;}
       .header-title { font-size: 2.3rem; }
+      .about-avatar { width: 95px; height: 95px;}
+      .timeline-step, .card, .bonus-card, .price-card {
+        padding: 1.2rem 0.8rem;
+        min-width: 0;
+        max-width: 100%;
+      }
+      h2 { font-size: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      html { font-size: 90%; }
+      .header-title { font-size: 1.42rem; }
+      .header-sub,
+      .header-desc { font-size: 1rem; }
+      .main-btn, button { font-size: 1rem; padding: 0.7rem 1.3rem;}
+      .about-avatar { width: 60px; height: 60px;}
+      .timeline-step, .card, .bonus-card, .price-card {
+        padding: 0.7rem 0.4rem;
+      }
+      section { padding: 1.1rem 0;}
+      .cta-section, .price-section, .about-section, .project-section { border-radius: 1rem; }
+      footer { border-radius: 1rem 1rem 0 0; }
+    }
+    @media (max-width: 420px) {
+      .header-title { font-size: 1rem; }
+      .container { padding: 0 0.1rem; }
+      .about-info h3 { font-size: 1rem;}
+      .about-info p { font-size: 0.85rem;}
+      .timeline-step ul { font-size: 0.89rem;}
+      .card-title, .bonus-card .card-title { font-size: 0.9rem;}
+      .card-text, .bonus-card .card-text { font-size: 0.9rem;}
+      .main-btn, button { font-size: 0.82rem; padding: 0.5rem 1rem;}
     }
   </style>
 </head>
