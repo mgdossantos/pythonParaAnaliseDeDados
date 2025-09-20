@@ -1,712 +1,445 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Python para Análise de Dados - Curso Intermediário</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&family=Roboto:wght@400;700&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Montserrat', 'ui-sans-serif', 'system-ui'],
+            body: ['Open Sans', 'ui-sans-serif', 'system-ui'],
+          },
+          colors: {
+            brand: {
+              cream: '#fdf6e3',
+              red: '#e74c3c',
+              blue: '#1e3a8a'
+            }
+          },
+          borderRadius: {
+            brand: '1.5rem'
+          },
+          boxShadow: {
+            brand: '0 4px 28px rgba(30,58,138,0.10)',
+            glow: '0 10px 44px rgba(231,76,60,0.20)'
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --main-bg: #fdf6e3;
-      --main-red: #e74c3c;
-      --main-blue: #1e3a8a;
-      --card-bg: #fff;
-      --border-radius: 1.5rem;
-      --shadow: 0 4px 28px rgba(30,58,138,0.10);
-      --gradient: linear-gradient(120deg, var(--main-red) 60%, var(--main-blue) 100%);
-    }
-    html {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      font-size: 100%;
-    }
-    *, *:before, *:after {
-      box-sizing: inherit;
-    }
-    body {
-      background: var(--main-bg);
-      margin: 0;
-      font-family: 'Montserrat', 'Open Sans', 'Roboto', 'Gloria Hallelujah', sans-serif;
-      color: var(--main-red);
-    }
-    a { color: var(--main-red); text-decoration: none; }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.4rem;
-    }
-    header {
-      background: var(--gradient);
-      color: #fff;
-      padding: 4rem 0 3rem 0;
-      text-align: center;
-      border-bottom-left-radius: var(--border-radius);
-      border-bottom-right-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-    }
-    .header-title {
-      font-family: 'Montserrat', 'Roboto', sans-serif;
-      font-size: 4.2rem;
-      line-height: 1.1;
-      margin-bottom: 1.4rem;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 2px 14px rgba(231,76,60,0.18);
-    }
-    .header-sub {
-      font-size: 1.3rem;
-      font-family: 'Montserrat', 'Roboto', sans-serif;
-      opacity: 0.97;
-      margin-bottom: 1.1rem;
-      color: #fdf6e3;
-    }
-    .header-desc {
-      font-size: 1.1rem;
-      font-family: 'Open Sans', 'Roboto', sans-serif;
-      opacity: 0.94;
-      margin-bottom: 1.5rem;
-      color: #fdf6e3;
-    }
-    .main-btn, button {
-      background: var(--main-blue);
-      color: #fff;
-      font-family: 'Montserrat', 'Roboto', sans-serif;
-      font-weight: 700;
-      border: none;
-      padding: 1rem 2.5rem;
-      border-radius: var(--border-radius);
-      font-size: 1.2rem;
-      margin-top: 1.3rem;
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      transition: background 0.2s, transform 0.13s;
-    }
-    .main-btn:hover, button:hover {
-      background: #fff;
-      color: var(--main-red);
-      transform: scale(0.97);
-    }
-
-    section {
-      padding: 3.3rem 0;
-    }
-    h2 {
-      font-size: 2.3rem;
-      font-family: 'Montserrat', 'Roboto', sans-serif;
-      text-align: center;
-      margin-bottom: 2.3rem;
-      font-weight: 700;
-      color: var(--main-red);
-    }
-    .cards {
-      display: flex;
-      gap: 1.7rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 2.2rem 1.5rem;
-      flex: 1 1 260px;
-      min-width: 220px;
-      max-width: 340px;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-      color: var(--main-red);
-    }
-    .card:hover {
-      transform: translateY(-7px) scale(1.015);
-      box-shadow: 0 7px 30px rgba(231,76,60,0.14);
-    }
-    .card-icon {
-      font-size: 2.3rem;
-      margin-bottom: 0.7rem;
-      color: var(--main-red);
-    }
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      font-family: 'Montserrat', 'Roboto', sans-serif;
-      color: var(--main-blue);
-      margin-bottom: 0.4rem;
-    }
-    .card-text {
-      font-size: 1.07rem;
-      font-family: 'Open Sans', 'Roboto', sans-serif;
-      color: var(--main-red);
-      opacity: 0.97;
-    }
-
-    .timeline {
-      margin-top: 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .timeline-step {
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 1.7rem;
-      padding: 2rem 1.5rem;
-      border-left: 8px solid var(--main-red);
-    }
-    .timeline-step.alt { border-left-color: var(--main-blue); }
-    .timeline-step .step-title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: var(--main-red);
-      margin-bottom: 0.5rem;
-    }
-    .timeline-step.alt .step-title { color: var(--main-blue); }
-    .timeline-step .step-sub {
-      font-size: 1.09rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--main-red);
-    }
-    .timeline-step.alt .step-sub { color: var(--main-blue);}
-    .timeline-step ul {
-      margin: 0 0 0.2rem 1.1rem;
-      padding: 0;
-      list-style-type: disc;
-      color: var(--main-red);
-      font-size: 1rem;
-      font-family: 'Open Sans', 'Roboto', sans-serif;
-    }
-    .timeline-step .step-deliver {
-      margin-top: 0.85rem;
-      font-size: 1.01rem;
-      color: var(--main-red);
-    }
-
-    .project-section {
-      background: var(--main-red);
-      color: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 2.1rem 1.3rem;
-      margin-bottom: 2rem;
-      max-width: 650px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .project-section strong {
-      color: #ffe;
-    }
-
-    .about-section {
-      background: linear-gradient(90deg, #e74c3c 0%, #1e3a8a 100%);
-      color: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 2.3rem 1.7rem;
-      max-width: 870px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .about-content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2.2rem;
-      align-items: center;
-    }
-    .about-avatar {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 2px 12px rgba(231,76,60,0.13);
-      border: 3px solid #ffe5d0;
-      margin: auto;
-    }
-    .about-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .about-info {
-      flex: 1 1 260px;
-      min-width: 230px;
-    }
-    .about-info h3 {
-      margin-top: 0;
-      font-size: 1.38rem;
-      font-weight: bold;
-      margin-bottom: 0.7rem;
-    }
-    .about-info p {
-      font-size: 1.05rem;
-      margin-bottom: 1rem;
-      color: #fff;
-      opacity: 0.98;
-    }
-
-    .bonus-cards {
-      display: flex;
-      gap: 1.1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-    .bonus-card {
-      background: var(--main-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 1.4rem 1.1rem;
-      flex: 1 1 180px;
-      min-width: 150px;
-      max-width: 220px;
-      text-align: center;
-      border: 2px solid var(--main-red);
-      margin-bottom: 1rem;
-    }
-    .bonus-card.alt { border-color: var(--main-blue);}
-    .bonus-card .card-icon { font-size: 2rem; margin-bottom: 0.5rem; color: var(--main-red);}
-    .bonus-card.alt .card-icon { color: var(--main-blue);}
-    .bonus-card .card-title { font-size: 1.09rem; font-weight: bold; margin-bottom: 0.2rem;}
-
-    .price-section {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      background: linear-gradient(90deg, #e74c3c 0%, #1e3a8a 100%);
-      color: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 2.1rem 1.7rem 2.5rem 1.7rem;
-      text-align: center;
-    }
-    .price-cards {
-      display: flex;
-      gap: 1.2rem;
-      margin: 2.3rem 0 2.3rem 0;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .price-card {
-      background: var(--main-bg);
-      border-radius: var(--border-radius);
-      color: var(--main-red);
-      box-shadow: var(--shadow);
-      flex: 1 1 210px;
-      min-width: 160px;
-      max-width: 260px;
-      padding: 1.3rem 1rem;
-      margin-bottom: 1rem;
-    }
-    .price-card.alt { color: var(--main-blue);}
-    .price-card .country { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.2rem;}
-    .price-card .price { font-size: 1.7rem; font-weight: bold; margin-bottom: 0.6rem;}
-    .price-section ul {
-      font-size: 1rem;
-      margin: 0 auto 1rem auto;
-      display: inline-block;
-      text-align:left;
-      color: #fff;
-      opacity: 0.95;
-    }
-
-    .cta-section {
-      background: var(--gradient);
-      color: #fff;
-      text-align: center;
-      padding: 2.7rem 0 2.7rem 0;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin: 3.2rem 0 1.5rem 0;
-    }
-    .cta-section .cta-title {
-      font-size: 2.1rem;
-      font-family: 'Gloria Hallelujah', cursive;
-      font-weight: bold;
-      margin-bottom: 1.1rem;
-    }
-    .cta-section .cta-desc {
-      font-size: 1.17rem;
-      font-family: 'Open Sans', 'Roboto', sans-serif;
-      margin-bottom: 2.1rem;
-      opacity: 0.95;
-    }
-    .cta-section .main-btn {
-      background: #fff;
-      color: var(--main-red);
-      font-weight: bold;
-      font-size: 1.2rem;
-      transition: background 0.2s, color 0.2s;
-    }
-    .cta-section .main-btn:hover {
-      background: var(--main-blue);
-      color: #fff;
-    }
-
-    footer {
-      background: var(--main-red);
-      color: #fff;
-      text-align: center;
-      padding: 1.8rem 0;
-      font-size: 1.03rem;
-      margin-top: 3rem;
-      border-radius: var(--border-radius) var(--border-radius) 0 0;
-      box-shadow: 0 -2px 13px rgba(231,76,60,0.09);
-    }
-
-    /* Responsividade */
-    @media (max-width: 1200px) {
-      .container { max-width: 95vw; }
-      .about-section, .price-section { max-width: 98vw; }
-    }
-    @media (max-width: 1024px) {
-      .header-title { font-size: 3rem; }
-      .about-section, .price-section { max-width: 99vw; }
-    }
-    @media (max-width: 800px) {
-      .cards, .bonus-cards, .about-content, .price-cards { flex-direction: column; }
-      .container { padding: 0 0.3rem;}
-      .about-section { padding: 1.3rem 0.5rem;}
-      .project-section { padding: 1.3rem 0.6rem;}
-      .price-section { padding: 1.2rem 0.6rem;}
-      section { padding: 2.2rem 0;}
-      .header-title { font-size: 2.3rem; }
-      .about-avatar { width: 95px; height: 95px;}
-      .timeline-step, .card, .bonus-card, .price-card {
-        padding: 1.2rem 0.8rem;
-        min-width: 0;
-        max-width: 100%;
-      }
-      h2 { font-size: 1.5rem; }
-    }
-    @media (max-width: 600px) {
-      html { font-size: 90%; }
-      .header-title { font-size: 1.42rem; }
-      .header-sub,
-      .header-desc { font-size: 1rem; }
-      .main-btn, button { font-size: 1rem; padding: 0.7rem 1.3rem;}
-      .about-avatar { width: 60px; height: 60px;}
-      .timeline-step, .card, .bonus-card, .price-card {
-        padding: 0.7rem 0.4rem;
-      }
-      section { padding: 1.1rem 0;}
-      .cta-section, .price-section, .about-section, .project-section { border-radius: 1rem; }
-      footer { border-radius: 1rem 1rem 0 0; }
-    }
-    @media (max-width: 420px) {
-      .header-title { font-size: 1rem; }
-      .container { padding: 0 0.1rem; }
-      .about-info h3 { font-size: 1rem;}
-      .about-info p { font-size: 0.85rem;}
-      .timeline-step ul { font-size: 0.89rem;}
-      .card-title, .bonus-card .card-title { font-size: 0.9rem;}
-      .card-text, .bonus-card .card-text { font-size: 0.9rem;}
-      .main-btn, button { font-size: 0.82rem; padding: 0.5rem 1rem;}
-    }
+    html { scroll-behavior: smooth; }
+    .gradient-hero { background-image: linear-gradient(120deg, #e74c3c 60%, #1e3a8a 100%); }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: saturate(140%) blur(8px); }
+    .section-anchor { scroll-margin-top: 96px; }
   </style>
 </head>
-<body>
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="header-title">Python para Análise de Dados</div>
-      <div class="header-sub">Domine manipulação, automação e dashboards com Python.</div>
-      <div class="header-desc">Curso intermediário — 8 semanas • 2h/semana • 100% online e gravado</div>
-      <button class="main-btn" onclick="openGoogleForm()">Quero me inscrever agora 🚀</button>
+<body class="bg-brand-cream text-brand-red font-body">
+  <!-- Substitua pela URL real do seu Google Form -->
+  <script>
+    const FORM_URL = "https://forms.gle/vFLm5ohBPs4STqbY8";
+  </script>
+
+  <!-- Topbar fixa -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 shadow-brand">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="h-16 flex items-center justify-between gap-4">
+        <a href="#topo" data-scroll-to class="flex items-center gap-3">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl text-white gradient-hero shadow-brand">🐍</span>
+          <span class="font-display font-extrabold text-brand-blue leading-none">Python para Análise de Dados</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-2">
+          <a href="#conteudo" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Programa</a>
+          <a href="#professora" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Professora</a>
+          <a href="#materiais" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Materiais</a>
+          <a href="#investimento" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Investimento</a>
+          <a href="#faq" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">FAQ</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <!-- Botão vira link para o Form -->
+          <a href="https://forms.gle/vFLm5ohBPs4STqbY8" target="_blank" rel="noopener"
+             class="hidden sm:inline-flex bg-brand-blue text-white px-4 py-2 rounded-xl font-display font-semibold shadow-brand hover:shadow-glow transition">
+            Inscreva-se
+          </a>
+          <button id="toggleSumario" class="md:hidden inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-brand-red/10 text-brand-red">
+            Sumário ☰
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- Informações Iniciais -->
-  <section>
-    <div class="container">
-      <div class="cards">
-          <div class="card">
-          <div class="card-icon">⏰</div>
-          <div class="card-title">Duração</div>
-          <div class="card-text">8 semanas • 2h/semana</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">💻</div>
-          <div class="card-title">Formato</div>
-          <div class="card-text">100% Online + Gravado</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">📈</div>
-          <div class="card-title">Nível</div>
-          <div class="card-text">Intermediário</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Hero -->
+  <section id="topo" class="gradient-hero text-white rounded-b-brand shadow-brand relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-20 blur-2xl"
+      style="background: radial-gradient(60% 60% at 50% 50%, #ffffff 0%, rgba(255,255,255,0) 70%);"></div>
+    <div class="absolute -bottom-24 -left-24 w-[28rem] h-[28rem] rounded-full opacity-20 blur-2xl"
+      style="background: radial-gradient(60% 60% at 50% 50%, #ffffff 0%, rgba(255,255,255,0) 70%);"></div>
 
-  <!-- Para Quem é Este Curso -->
-  <section>
-    <div class="container">
-      <h2>Para quem é este curso?</h2>
-      <div class="cards" style="gap:2rem;">
-        <div class="card" style="min-width:260px;">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Já conhece Python básico</div>
-          <div class="card-text">Você sabe variáveis, loops, funções e estruturas de dados básicas</div>
-        </div>
-        <div class="card" style="min-width:260px;">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Trabalha com dados</div>
-          <div class="card-text">Usa Excel, planilhas ou precisa analisar informações regularmente</div>
-        </div>
-        <div class="card" style="min-width:260px;">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Quer automatizar tarefas</div>
-          <div class="card-text">Cansou de fazer relatórios manuais e quer otimizar seu tempo</div>
-        </div>
-        <div class="card" style="min-width:260px;">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Busca crescimento profissional</div>
-          <div class="card-text">Quer se destacar com habilidades em análise de dados</div>
-        </div>
-        <div class="card" style="min-width:260px;">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Prefere aprender na prática</div>
-          <div class="card-text">Gosta de projetos reais e aplicação imediata do conhecimento</div>
-        </div>
-        <div class="card" style="min-width:260px;">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Quer criar visualizações</div>
-          <div class="card-text">Deseja fazer gráficos e dashboards profissionais para apresentações</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-   <section>
-    <div class="container">
-        <div style="text-align:center;margin-top:2.3rem;">
-        <button class="main-btn" onclick="openGoogleForm()">Quero transformar minha carreira!</button>
-        </div>
-    </div>
-  </section>
-
-  <!-- Conteúdo Programático -->
-  <section>
-    <div class="container">
-      <h2>Conteúdo Programático</h2>
-      <div class="timeline">
-        <!-- Módulo 1 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 1 — Introdução à Análise de Dados</div>
-          <ul>
-            <li>Revisão rápida do básico de Python</li>
-            <li>Configuração do Google Colab</li>
-            <li>Fluxo completo de análise de dados</li>
-            <li><strong>Mini-projeto:</strong> Carregar e analisar um dataset CSV</li>
-          </ul>
-        </div>
-        <!-- Módulo 2 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 2 — Fundamentos do NumPy</div>
-          <ul>
-            <li>Criação e manipulação de arrays</li>
-            <li>Indexação, slicing e operações vetorizadas</li>
-            <li>Funções estatísticas básicas</li>
-            <li><strong>Mini-projeto:</strong> Analisar notas de alunos com NumPy</li>
-          </ul>
-        </div>
-        <!-- Módulo 3 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 3 — Pandas: Manipulação de Dados</div>
-          <ul>
-            <li>Estruturas Series e DataFrame</li>
-            <li>Importação e exportação de dados (CSV, Excel, JSON)</li>
-            <li>Seleção, filtragem, ordenação e agrupamento</li>
-            <li><strong>Mini-projeto:</strong> Criar relatório de vendas usando Pandas</li>
-          </ul>
-        </div>
-        <!-- Módulo 4 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 4 — Manipulação de Planilhas e Arquivos</div>
-          <ul>
-            <li>Leitura e escrita de planilhas Excel</li>
-            <li>Automação com openpyxl e os</li>
-            <li>Consolidar várias planilhas em um único relatório</li>
-            <li><strong>Mini-projeto:</strong> Relatório consolidado de diferentes meses</li>
-          </ul>
-        </div>
-        <!-- Módulo 5 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 5 — Automação de Tarefas Repetitivas</div>
-          <ul>
-            <li>Automação de relatórios com Pandas e Excel</li>
-            <li>Envio automático de relatórios por email</li>
-            <li>Download e upload de arquivos</li>
-            <li><strong>Mini-projeto:</strong> Script que gera e envia relatórios por email</li>
-          </ul>
-        </div>
-        <!-- Módulo 6 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 6 — Visualização de Dados e Dashboard</div>
-          <ul>
-            <li>Introdução ao Matplotlib e Seaborn</li>
-            <li>Gráficos de linha, barra, pizza e dispersão</li>
-            <li>Heatmaps, boxplots e dashboards básicos</li>
-            <li><strong>Mini-projeto:</strong> Dashboard interativo com métricas chave</li>
-          </ul>
-        </div>
-        <!-- Módulo 7 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 7 — Estatística Aplicada à Análise de Dados</div>
-          <ul>
-            <li>Medidas de tendência central e dispersão</li>
-            <li>Correlação e covariância</li>
-            <li>Identificação de outliers e anomalias</li>
-            <li><strong>Mini-projeto:</strong> Identificar padrões em dataset real</li>
-          </ul>
-        </div>
-        <!-- Módulo 8 -->
-        <div class="timeline-step alt">
-          <div class="step-title">Módulo 8 — Projeto Final Integrador</div>
-          <ul>
-            <li>Escolha de um dataset real</li>
-            <li>Aplicar limpeza, manipulação e automação</li>
-            <li>Criar gráficos, dashboards e relatórios</li>
-            <li><strong>Apresentar o notebook final para a turma</strong></li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Sobre a Professora -->
-   <section>
-    <div class="container">
-      <h2>Sobre a Professora</h2>
-      <div class="about-section">
-        <div class="about-content">
-          <div class="about-avatar">
-            <img src="./images/marcela.jpg" alt="Marcela dos Santos">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 bg-white/10 ring-1 ring-white/20 rounded-full px-4 py-2 mb-3">
+            <span class="text-lg">🎓</span><span class="text-sm tracking-wide">Curso Intermediário</span>
           </div>
-          <div class="about-info">
-            <h3>Marcela dos Santos</h3>
-            <p>
-             Sou professora há mais de 14 anos, doutoranda em Ciência da Computação no Canadá e criadora de conteúdo apaixonada
-              por ensinar. Minha missão? Tornar a tecnologia mais simples e acessível para quem acha que “não nasceu pra isso”.</p>
-            <p>
-              Minha jornada com a programação começou bem antes da moda do “aprender a codar”, e desde então já ensinei centenas
-              de pessoas a darem seus primeiros passos no mundo da tecnologia — de iniciantes curiosos a pesquisadores que hoje
-              usam Python para turbinar seus projetos.</p>
-            <p>
-            Ao longo do caminho, tive a oportunidade de trabalhar em projetos educacionais com gigantes como Intel e Google e
-              descobrir algo que mudou a minha forma de ensinar: não importa o quão complexa seja a tecnologia, o segredo
-              é explicar de um jeito que faça sentido para você.</p>
-            <p>
-              Hoje, além de dar aulas, crio conteúdos para ajudar professores, pesquisadores e profissionais que querem usar IA e
-              programação para ganhar mais autonomia, economizar tempo e transformar a forma como trabalham.</p>
-            <p>
-            Se você acha que programação não é pra você, te prometo uma coisa: com a estratégia certa e um pouco de prática,
-              você vai se surpreender com o que é capaz de criar. 🚀 </p>
-            <p>Bora aprender juntos?
-            </p>
-          </div>
+          <h1 class="font-display font-extrabold leading-tight text-4xl sm:text-5xl mb-3">
+            Python para Análise de Dados
+          </h1>
+          <p class="text-brand-cream/95 text-lg leading-relaxed">
+            Domine manipulação, automação e dashboards com Python.
+          </p>
+          <p class="text-brand-cream/95 text-lg leading-relaxed">
+           Conteúdo focado no mundo real, com exercícios e projetos práticos.
+          </p>
+        </div>
+        <div class="shrink-0 flex flex-wrap gap-3">
+          <!-- Botão vira link para o Form -->
+          <a href="https://forms.gle/vFLm5ohBPs4STqbY8" target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center bg-white text-brand-red px-6 py-3 rounded-2xl font-display font-semibold shadow-brand hover:shadow-glow transition">
+            Inscreva-se
+          </a>
+          <a href="#conteudo" data-scroll-to class="inline-flex items-center justify-center bg-white/10 text-white px-6 py-3 rounded-2xl font-display font-semibold ring-1 ring-white/30 hover:bg-white/20 transition">
+            Ver Conteúdo
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Materiais & Bônus -->
-  <section>
-    <div class="container">
-      <h2>Materiais & Bônus</h2>
-      <div class="bonus-cards">
-        <div class="bonus-card">
-          <div class="card-icon">📂</div>
-          <div class="card-title">Kit de Automação</div>
-          <div class="card-text">Scripts prontos para gerar relatórios e consolidar planilhas.</div>
-        </div>
-        <div class="bonus-card alt">
-          <div class="card-icon">📊</div>
-          <div class="card-title">Template</div>
-          <div class="card-text">Modelo de dashboard interativo em Plotly e Seaborn.</div>
-        </div>
-        <div class="bonus-card">
-          <div class="card-icon">✅</div>
-          <div class="card-title">Checklist</div>
-          <div class="card-text">Fluxo completo de análise: limpeza → manipulação → visualização.</div>
-        </div>
-        <div class="bonus-card alt">
-          <div class="card-icon">📚</div>
-          <div class="card-title">Dicionário</div>
-          <div class="card-text">Guia rápido com os principais métodos do Pandas e NumPy.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Whastapp -->
-<section style="width:100%;background:var(--main-blue);color:#fff;text-align:center;padding:3.5rem 0;">
-  <h2 style="color:#fff; margin-bottom:1rem; font-size:2.3rem;">Ainda está com dúvidas?</h2>
-  <p style="font-size:1.15rem;max-width:680px;margin:0 auto 2rem auto;">
-    Se você quer conversar diretamente comigo para tirar dúvidas sobre o curso, clique no botão abaixo e fale comigo no WhatsApp!
-  </p>
-  <a href="https://wa.me/14388853987" target="_blank" rel="noopener" style="display:inline-block;">
-    <button class="main-btn" style="background:var(--main-red);color:#fff;font-size:1.1rem;">
-      Conversar pelo WhatsApp
-    </button>
-  </a>
-  <div style="margin-top:1rem;opacity:0.8;">Respondo pessoalmente :)</div>
-</section>
-  <!-- Investimento -->
-  <section>
-    <div class="container">
-      <h2>Investimento</h2>
-      <div class="price-section">
-        <div style="font-size:1.2rem;font-weight:bold;margin-bottom:1rem;">Curso Completo - 8 Semanas</div>
-        <div style="margin-bottom:1.3rem;">Acesso a todas as aulas, materiais e suporte</div>
-        <div class="price-cards">
-          <div class="price-card">
-            <div style="font-size:2rem;">🇧🇷</div>
-            <div class="country">Brasil</div>
-            <div class="price alt">R$ 624</div>
+  <!-- Layout principal -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <div class="grid lg:grid-cols-12 gap-8">
+      <article class="lg:col-span-12 space-y-12">
+        <!-- Introdução / Objetivos / Pré-requisitos -->
+        <section class="section-anchor">
+          <div class="grid md:grid-cols-3 gap-6">
+            <div id="introducao" class="bg-white rounded-3xl shadow-brand p-6">
+              <h2 class="font-display text-2xl text-brand-blue mb-3">Introdução</h2>
+              <p class="text-brand-red/90 leading-relaxed">
+                Este material reúne os principais tópicos de análise de dados com Python. A ideia é servir como referência rápida e prática, com exemplos e exercícios para consolidar cada conceito.
+              </p>
+            </div>
+            <div id="objetivos" class="bg-white rounded-3xl shadow-brand p-6">
+              <h2 class="font-display text-2xl text-brand-blue mb-3">Objetivos</h2>
+              <ul class="list-disc pl-6 space-y-2 text-brand-red/90">
+                <li>Dominar a manipulação de dados com Pandas e NumPy.</li>
+                <li>Aplicar técnicas de limpeza, transformação e agregação.</li>
+                <li>Criar visualizações claras e informativas.</li>
+                <li>Estruturar projetos reprodutíveis e comunicáveis.</li>
+              </ul>
+            </div>
+            <div id="pre-requisitos" class="bg-white rounded-3xl shadow-brand p-6">
+              <h2 class="font-display text-2xl text-brand-blue mb-3">Pré-requisitos</h2>
+              <ul class="list-disc pl-6 space-y-2 text-brand-red/90">
+                <li>Noções básicas de Python (variáveis, funções, listas, dicionários).</li>
+                <li>Curiosidade com dados e vontade de aprender fazendo.</li>
+                <li>Computador com Python 3.9+ e acesso à internet.</li>
+              </ul>
+            </div>
           </div>
-          <div class="price-card alt">
-            <div style="font-size:2rem;">🇨🇦</div>
-            <div class="country">Canadá</div>
-            <div class="price alt">CA$ 156</div>
-          </div>
-        </div>
-        <ul>
-          <li>✓ 8 semanas de conteúdo prático (2h/semana)</li>
-          <li>✓ Plantão integrado na Semana 3</li>
-          <li>✓ Todos os materiais e bônus inclusos</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+        </section>
 
-  <!-- CTA Final -->
-  <section style="width:100%;background:var(--main-red);color:#fff;text-align:center;padding:3.5rem 0;">
-  <div class="cta-title" style="font-size:2.2rem;font-family:'Gloria Hallelujah',cursive;font-weight:bold;margin-bottom:1.2rem;">
-    Pronto para começar sua jornada?
+        <!-- Conteúdo -->
+        <section id="conteudo" class="section-anchor">
+          <h2 class="font-display text-3xl text-brand-red mb-6">Programa do Curso</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 1 — Introdução à Análise de Dados</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Revisão rápida do básico de Python</li>
+                <li>Fluxo completo de análise de dados</li>
+                <li><strong>Mini-projeto:</strong> Carregar e analisar um dataset CSV</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 2 — Fundamentos do NumPy</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Criação e manipulação de arrays</li>
+                <li>Indexação, slicing e operações vetorizadas</li>
+                <li>Funções estatísticas básicas</li>
+                <li><strong>Mini-projeto:</strong> Analisar notas de alunos com NumPy</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 3 — Pandas: Manipulação de Dados</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Estruturas Series e DataFrame</li>
+                <li>Importação e exportação de dados (CSV, Excel, JSON)</li>
+                <li>Seleção, filtragem, ordenação e agrupamento</li>
+                <li><strong>Mini-projeto:</strong> Criar relatório de vendas usando Pandas</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 4 — Manipulação de Planilhas e Arquivos</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Leitura e escrita de planilhas Excel</li>
+                <li>Automação com openpyxl e os</li>
+                <li>Consolidar várias planilhas em um único relatório</li>
+                <li><strong>Mini-projeto:</strong> Relatório consolidado de diferentes meses</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 5 — Automação de Tarefas Repetitivas</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                 <li>Automação de relatórios com Pandas e Excel</li>
+                 <li>Envio automático de relatórios por email</li>
+                 <li>Download e upload de arquivos</li>
+                <li><strong> Mini-projeto:</strong> Script que gera e envia relatórios por email</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 6 — Visualização de Dados e Dashboard</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Introdução ao Matplotlib e Seaborn</li>
+                <li>Gráficos de linha, barra, pizza e dispersão</li>
+                <li>Heatmaps, boxplots e dashboards básicos</li>
+                <li><strong>Mini-projeto:</strong>Dashboard interativo com métricas chave</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 7 — Estatística Aplicada à Análise de Dados</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Medidas de tendência central e dispersão</li>
+                <li>Correlação e covariância</li>
+                <li>Identificação de outliers e anomalias</li>
+                <li><strong>Mini-projeto:</strong> Identificar padrões em dataset real</li>
+              </ul>
+            </div>
+            <div class="bg-white rounded-3xl shadow-brand p-6">
+              <h3 class="font-display text-brand-blue mb-2">Módulo 8 — Projeto Final Integrador</h3>
+              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
+                <li>Escolha de um dataset real</li>
+                <li>Aplicar limpeza, manipulação e automação</li>
+                <li>Criar gráficos, dashboards e relatórios</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sobre a Professora -->
+        <section id="professora" class="section-anchor bg-white rounded-3xl shadow-brand p-8">
+          <h2 class="font-display text-3xl md:text-4xl text-brand-red mb-6 text-center md:text-left">
+            Sobre a Professora
+          </h2>
+
+          <div class="flex flex-col md:flex-row items-center md:items-start">
+            <div class="flex-shrink-0 md:mr-6 mb-6 md:mb-0">
+              <img src="./images/marcela.jpg"
+                   alt="Marcela dos Santos"
+                   class="w-64 h-64 rounded-2xl object-cover shadow-lg border-4 border-blue-100">
+            </div>
+
+            <div class="text-brand-blue/90">
+              <p class="mb-4 text-lg">
+                <strong>Doutoranda em Ciência da Computação e professora há mais de 14 anos.</strong>
+              </p>
+              <ul class="list-disc pl-5 space-y-2 text-base">
+                <li>Já ajudei desde iniciantes até pesquisadores a aprender e aplicar Python em seus projetos.</li>
+                <li>Atuei em projetos educacionais com Intel e Google, traduzindo tecnologia de forma clara e prática.</li>
+                <li>Crio conteúdos que ajudam professores, pesquisadores e profissionais a usar IA e programação para ganhar autonomia, economizar tempo e transformar seu trabalho.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Materiais e Bônus -->
+        <section id="materiais" class="section-anchor bg-white rounded-3xl shadow-brand p-6">
+          <h2 class="font-display text-3xl text-brand-red mb-3">Materiais e Bônus</h2>
+          <div class="grid md:grid-cols-4 gap-6">
+            <div class="rounded-2xl bg-brand-red/5 p-4">
+              <h3 class="font-display text-brand-blue mb-1">📂 Kit de Automação</h3>
+              <p class="text-brand-red/90">Scripts prontos para gerar relatórios e consolidar planilhas.</p>
+            </div>
+            <div class="rounded-2xl bg-brand-red/5 p-4">
+              <h3 class="font-display text-brand-blue mb-1">📊 Template</h3>
+              <p class="text-brand-red/90">Modelo de dashboard interativo em Plotly e Seaborn.</p>
+            </div>
+            <div class="rounded-2xl bg-brand-red/5 p-4">
+              <h3 class="font-display text-brand-blue mb-1">✅ Checklist</h3>
+              <p class="text-brand-red/90">Fluxo completo de análise: limpeza → manipulação → visualização.</p>
+            </div>
+            <div class="rounded-2xl bg-brand-red/5 p-4">
+              <h3 class="font-display text-brand-blue mb-1">📚 Dicionário</h3>
+              <p class="text-brand-red/90">Guia rápido com os principais métodos do Pandas e NumPy.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="section-anchor bg-white rounded-3xl shadow-brand p-6">
+          <h2 class="font-display text-3xl text-brand-red mb-6">Perguntas Frequentes</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6">
+              <button class="w-full text-left flex items-center justify-between gap-3 faq-toggle" aria-expanded="false">
+                <span class="font-display text-brand-blue">Para quem é este curso?</span>
+                <span class="text-brand-red text-xl">+</span>
+              </button>
+              <div class="pt-3 hidden">
+                <p class="text-brand-red/90">Para quem já conhece o básico de Python e quer evoluir em análise de dados.</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-6">
+              <button class="w-full text-left flex items-center justify-between gap-3 faq-toggle" aria-expanded="false">
+                <span class="font-display text-brand-blue">Quais ferramentas são usadas?</span>
+                <span class="text-brand-red text-xl">+</span>
+              </button>
+              <div class="pt-3 hidden">
+                <p class="text-brand-red/90">Python 3, Google Colab, Pandas, NumPy e bibliotecas de visualização.</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-6">
+              <button class="w-full text-left flex items-center justify-between gap-3 faq-toggle" aria-expanded="false">
+                <span class="font-display text-brand-blue">Como acontecem as aulas?</span>
+                <span class="text-brand-red text-xl">+</span>
+              </button>
+              <div class="pt-3 hidden">
+                <p class="text-brand-red/90">Encontros online com prática e projetos guiados.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Investimento -->
+        <section id="investimento" class="section-anchor bg-white rounded-3xl shadow-brand p-8">
+          <h2 class="font-display text-3xl md:text-4xl text-brand-red mb-8 text-center">Investimento</h2>
+
+          <div class="max-w-3xl mx-auto">
+            <div class="rounded-3xl p-8 border border-brand-red/20 shadow-lg bg-white">
+              <div class="flex items-end gap-4 justify-center mb-6">
+                <span class="text-5xl font-extrabold text-brand-red">R$ 624</span>
+                <span class="text-xl font-semibold text-gray-600">ou</span>
+                <span class="text-4xl font-extrabold text-brand-blue">CA$ 156</span>
+              </div>
+
+              <div class="space-y-2 text-lg text-brand-blue font-display mb-6">
+                <h3 class="font-semibold">✓ 8 semanas de conteúdo prático (2h/semana)</h3>
+                <h3 class="font-semibold">✓ Plantão integrado na Semana 3</h3>
+                <h3 class="font-semibold">✓ Todos os materiais e bônus inclusos</h3>
+              </div>
+
+              <!-- Botão vira link para o Form -->
+              <a href="https://forms.gle/vFLm5ohBPs4STqbY8" target="_blank" rel="noopener"
+                 class="w-full inline-flex items-center justify-center bg-brand-blue text-white px-6 py-4 rounded-2xl font-display font-semibold text-lg shadow-brand hover:shadow-glow transition">
+                Quero me inscrever!!!!
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA final -->
+        <section id="inscricao" class="section-anchor">
+          <div class="bg-white rounded-3xl shadow-brand p-8 text-center">
+            <h2 class="font-display text-3xl text-brand-red mb-3">Pronto(a) para avançar?</h2>
+            <p class="text-brand-red/90 max-w-2xl mx-auto mb-6">Garanta sua vaga e dê o próximo passo na carreira com Python para análise de dados.</p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <!-- Botão vira link para o Form -->
+              <a href="https://forms.gle/vFLm5ohBPs4STqbY8" target="_blank" rel="noopener"
+                 class="bg-brand-blue text-white px-6 py-3 rounded-2xl font-display font-semibold shadow-brand hover:shadow-glow transition">
+                Inscreva-se agora
+              </a>
+              <a href="#topo" data-scroll-to class="px-6 py-3 rounded-2xl font-display font-semibold bg-brand-red/10 text-brand-red hover:bg-brand-red/15 transition">Voltar ao topo</a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <!-- Toast (mantido para uso futuro, opcional) -->
+  <div id="toast" class="fixed top-4 right-4 z-50 hidden">
+    <div class="glass rounded-xl shadow-brand border border-white/50 px-4 py-3 flex items-start gap-3">
+      <div class="shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-blue" viewBox="0 0 20 20" fill="currentColor"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm.75 14.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9 6.5A1 1 0 0 1 10 5.5h.01A1 1 0 0 1 11 6.5v5a1 1 0 0 1-2 0Z"/></svg>
+      </div>
+      <div class="text-brand-blue/90 text-sm" id="toast-text">Ação concluída com sucesso.</div>
+      <button type="button" aria-label="Fechar" class="ml-2 text-brand-blue/70 hover:text-brand-blue" onclick="hideToast()">✕</button>
+    </div>
   </div>
-  <div class="cta-desc" style="font-size:1.24rem;font-family:'Open Sans','Roboto',sans-serif;margin-bottom:2rem;">
-    Aprenda a usar Python e se diferencie na sua carreira!!!
-  </div>
-  <button class="main-btn" onclick="openGoogleForm()" style="background:#fff;color:var(--main-blue);font-size:1.2rem;font-weight:bold;transition:background 0.2s, color 0.2s;">
-    Inscreva-se Agora
-  </button>
-  <div style="margin-top:1rem;font-size:1rem;opacity:0.85;">
-    Experiência real • Foco prático
-  </div>
-</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      &copy; 2025 Python para Análise de Dados. Todos os direitos reservados.
+  <footer class="py-10 text-center text-brand-red/70">
+    <div class="max-w-7xl mx-auto px-6">
+      <p>&copy; <span id="year"></span> Python para Análise de Dados — Curso Intermediário</p>
     </div>
   </footer>
+
+  <!-- Botão flutuante voltar ao topo -->
+  <button id="btnTop" class="fixed bottom-5 right-5 hidden bg-brand-blue text-white px-3 py-2 rounded-xl shadow-brand hover:shadow-glow transition">Topo ↑</button>
+
   <script>
-    function openGoogleForm() {
-      window.open('https://forms.gle/vFLm5ohBPs4STqbY8', '_blank');
+    // Ano
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll sem navegar a página
+    function smoothLinks() {
+      document.querySelectorAll('[data-scroll-to]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const el = document.querySelector(href);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const drawer = document.getElementById('drawer');
+            if (drawer) drawer.classList.add('hidden');
+          }
+        });
+      });
     }
+    smoothLinks();
+
+    // FAQ
+    document.querySelectorAll('.faq-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.parentElement.querySelector('div');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        content.classList.toggle('hidden');
+        const icon = btn.querySelector('span.text-brand-red');
+        if (icon) icon.textContent = expanded ? '+' : '–';
+      });
+    });
+
+    // Toast helpers (opcional)
+    let toastTimer = null;
+    function showToast(msg = 'Ação concluída!') {
+      const t = document.getElementById('toast');
+      const txt = document.getElementById('toast-text');
+      if (!t || !txt) return;
+      txt.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => hideToast(), 3000);
+    }
+    function hideToast() {
+      const t = document.getElementById('toast');
+      if (t) t.classList.add('hidden');
+    }
+
+    // Botão flutuante Topo
+    const btnTop = document.getElementById('btnTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) btnTop.classList.remove('hidden'); else btnTop.classList.add('hidden');
+    });
+    btnTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
+
+  <!-- (removido) Modal de inscrição e JS relacionados -->
+  <!-- (removido) Script Cloudflare obsoleto do desafio -->
 </body>
 </html>
+
+
