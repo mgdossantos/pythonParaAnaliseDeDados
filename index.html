@@ -3,443 +3,1063 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Python para Análise de Dados - Curso Intermediário</title>
+  <title>Python para Análise de Dados — Mulheres 30+</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['Montserrat', 'ui-sans-serif', 'system-ui'],
-            body: ['Open Sans', 'ui-sans-serif', 'system-ui'],
-          },
-          colors: {
-            brand: {
-              cream: '#fdf6e3',
-              red: '#e74c3c',
-              blue: '#1e3a8a'
-            }
-          },
-          borderRadius: {
-            brand: '1.5rem'
-          },
-          boxShadow: {
-            brand: '0 4px 28px rgba(30,58,138,0.10)',
-            glow: '0 10px 44px rgba(231,76,60,0.20)'
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    html { scroll-behavior: smooth; }
-    .gradient-hero { background-image: linear-gradient(120deg, #e74c3c 60%, #1e3a8a 100%); }
-    .glass { background: rgba(255,255,255,0.85); backdrop-filter: saturate(140%) blur(8px); }
-    .section-anchor { scroll-margin-top: 96px; }
+    :root {
+      --cream:  #fdf6e3;
+      --red:    #e74c3c;
+      --red-dk: #c0392b;
+      --blue:   #1e3a8a;
+      --blue-lt:#2a52c9;
+      --ink:    #1a1a1a;
+      --muted:  #5a5a5a;
+      --border: rgba(30,58,138,.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(253,246,227,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .logo {
+      display: flex; align-items: center; gap: .6rem;
+      text-decoration: none;
+    }
+    .logo-snake {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--blue); display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: .9rem;
+      color: var(--blue); letter-spacing: .01em;
+    }
+    .topnav { display: flex; gap: .25rem; align-items: center; }
+    .topnav a {
+      font-size: .8rem; font-weight: 400; color: var(--muted);
+      padding: .4rem .75rem; border-radius: 6px;
+      text-decoration: none; transition: color .2s, background .2s;
+    }
+    .topnav a:hover { color: var(--blue); background: rgba(30,58,138,.06); }
+    .btn-cta-sm {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem; font-weight: 500;
+      background: var(--blue); color: #fff;
+      padding: .5rem 1.25rem; border-radius: 8px;
+      text-decoration: none; white-space: nowrap;
+      transition: background .2s, transform .15s;
+      border: none; cursor: pointer;
+    }
+    .btn-cta-sm:hover { background: var(--blue-lt); transform: translateY(-1px); }
+    .mobile-btn {
+      display: none; background: none; border: 1px solid var(--border);
+      border-radius: 6px; padding: .4rem .75rem; cursor: pointer;
+      font-size: .8rem; color: var(--blue);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 6rem 2rem 5rem;
+      display: grid; grid-template-columns: 1fr 380px; gap: 4rem; align-items: start;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; right: 1rem; top: 3rem;
+      width: 340px; height: 340px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(231,76,60,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: 'DM Mono', monospace; font-size: .72rem;
+      color: var(--red); letter-spacing: .1em; text-transform: uppercase;
+      border: 1px solid rgba(231,76,60,.3);
+      padding: .3rem .8rem; border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 2s infinite; }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.0; color: var(--blue);
+      margin-bottom: 1.5rem; letter-spacing: -.02em;
+    }
+    .hero-title em { font-style: italic; color: var(--red); }
+
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 520px;
+      line-height: 1.7; margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+    .btn-primary {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500;
+      background: var(--red); color: #fff;
+      padding: .875rem 2rem; border-radius: 10px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: .5rem;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(231,76,60,.25);
+    }
+    .btn-primary:hover { background: var(--red-dk); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(231,76,60,.35); }
+    .btn-ghost {
+      font-size: .9rem; color: var(--blue); padding: .875rem 1.5rem;
+      border-radius: 10px; border: 1px solid var(--border);
+      text-decoration: none; transition: background .2s;
+    }
+    .btn-ghost:hover { background: rgba(30,58,138,.05); }
+
+    /* hero card lateral */
+    .hero-card {
+      background: var(--blue); color: #fff;
+      border-radius: 20px; padding: 2rem;
+      position: sticky; top: 80px;
+      box-shadow: 0 20px 60px rgba(30,58,138,.2);
+    }
+    .hero-card-label {
+      font-family: 'DM Mono', monospace; font-size: .68rem;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: rgba(255,255,255,.5); margin-bottom: 1rem;
+    }
+    .price-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900; line-height: 1;
+      color: #fff; margin-bottom: .25rem;
+    }
+    .price-sub { font-size: .8rem; color: rgba(255,255,255,.55); margin-bottom: 1.5rem; }
+    .card-checks { list-style: none; space-y: .5rem; margin-bottom: 1.75rem; }
+    .card-checks li {
+      display: flex; gap: .6rem; align-items: flex-start;
+      font-size: .82rem; color: rgba(255,255,255,.85);
+      padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .card-checks li:last-child { border: none; }
+    .card-checks li span.chk { color: var(--red); font-size: .9rem; margin-top: .05rem; flex-shrink: 0; }
+    .btn-card {
+      display: block; text-align: center;
+      background: var(--red); color: #fff; font-family: 'DM Sans', sans-serif;
+      font-size: .95rem; font-weight: 500;
+      padding: .9rem; border-radius: 10px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-card:hover { background: var(--red-dk); transform: translateY(-1px); }
+    .card-note { text-align: center; font-size: .72rem; color: rgba(255,255,255,.4); margin-top: .75rem; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(30,58,138,.03);
+    }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: grid; grid-template-columns: repeat(4,1fr);
+    }
+    .stat {
+      padding: 1.5rem 1rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat:last-child { border: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 900; color: var(--blue);
+      line-height: 1; display: block;
+    }
+    .stat-label { font-size: .75rem; color: var(--muted); margin-top: .25rem; display: block; }
+
+    /* ── SECTION WRAPPER ── */
+    .section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace; font-size: .7rem;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: var(--red); margin-bottom: .75rem; display: block;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+      color: var(--blue); line-height: 1.1; margin-bottom: .75rem;
+    }
+    .section-sub { font-size: .95rem; color: var(--muted); max-width: 540px; line-height: 1.7; }
+
+    /* ── PARA QUEM ── */
+    .para-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      margin-top: 3rem; background: var(--border);
+    }
+    .para-item {
+      background: var(--cream); padding: 2rem 1.75rem;
+      transition: background .2s;
+    }
+    .para-item:hover { background: rgba(30,58,138,.03); }
+    .para-item-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+    .para-item h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--blue); margin-bottom: .6rem;
+    }
+    .para-item p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PROGRAMA ── */
+    .programa-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .badge-row { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .badge {
+      font-family: 'DM Mono', monospace; font-size: .65rem;
+      padding: 2px 8px; border-radius: 4px; font-weight: 400;
+      letter-spacing: .04em;
+    }
+    .b-rev  { background: #dbeafe; color: #1e40af; }
+    .b-mov  { background: #fef3c7; color: #92400e; }
+    .b-new  { background: #dcfce7; color: #166534; }
+
+    .modulo-list { display: flex; flex-direction: column; gap: 2px; }
+    .modulo {
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      background: #fff; transition: box-shadow .2s;
+    }
+    .modulo:hover { box-shadow: 0 4px 20px rgba(30,58,138,.08); }
+    .modulo-btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem; text-align: left;
+    }
+    .modulo-num {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: 1.5rem; color: var(--blue); width: 2.5rem; flex-shrink: 0; line-height: 1;
+    }
+    .modulo-meta { flex: 1; min-width: 0; }
+    .modulo-name {
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: .95rem;
+      color: var(--ink); display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    }
+    .modulo-note { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    .modulo-arrow {
+      font-size: .8rem; color: var(--muted); flex-shrink: 0;
+      transition: transform .25s; transform-origin: center;
+    }
+    .modulo-arrow.open { transform: rotate(180deg); }
+    .modulo-body { display: none; padding: 0 1.5rem 1.5rem 4.5rem; }
+    .modulo-body.open { display: block; }
+    .modulo-ul { list-style: none; margin-bottom: 1rem; }
+    .modulo-ul li {
+      font-size: .85rem; color: var(--muted); padding: .3rem 0;
+      display: flex; gap: .75rem; border-bottom: 1px solid rgba(0,0,0,.04);
+    }
+    .modulo-ul li:last-child { border: none; }
+    .modulo-ul li .dot { color: var(--red); font-size: .7rem; margin-top: .35rem; flex-shrink: 0; }
+    .modulo-ul li strong { color: var(--blue); font-weight: 500; }
+    .mini-proj {
+      background: var(--cream); border-left: 3px solid var(--blue);
+      border-radius: 0 8px 8px 0; padding: .6rem 1rem;
+      font-size: .82rem; color: var(--blue);
+    }
+    .mini-proj strong { font-weight: 600; }
+
+    /* ── BÔNUS ── */
+    .bonus-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .bonus-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.75rem; position: relative; overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bonus-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .bonus-card:nth-child(1)::before { background: #22c55e; }
+    .bonus-card:nth-child(2)::before { background: var(--blue); }
+    .bonus-card:nth-child(3)::before { background: #f59e0b; }
+    .bonus-card:nth-child(4)::before { background: var(--red); }
+    .bonus-card:nth-child(5)::before { background: #ec4899; }
+    .bonus-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(30,58,138,.1); }
+    .bonus-tag {
+      font-family: 'DM Mono', monospace; font-size: .65rem;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted); margin-bottom: .75rem; display: block;
+    }
+    .bonus-num {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: 2.5rem; color: rgba(30,58,138,.08);
+      position: absolute; bottom: 1rem; right: 1.25rem; line-height: 1;
+    }
+    .bonus-card h3 {
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: .95rem;
+      color: var(--ink); margin-bottom: .6rem; line-height: 1.4;
+    }
+    .bonus-card p { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+    .bonus-result {
+      font-size: .75rem; font-weight: 500; margin-top: .75rem;
+      padding: .4rem .75rem; border-radius: 6px; display: inline-block;
+    }
+
+    /* ── PROFESSORA ── */
+    .prof-grid {
+      display: grid; grid-template-columns: 260px 1fr; gap: 4rem;
+      align-items: start; margin-top: 3rem;
+    }
+    .prof-img-wrap { position: relative; }
+    .prof-img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .prof-img-caption {
+      margin-top: .75rem; font-family: 'DM Mono', monospace;
+      font-size: .68rem; color: var(--muted); letter-spacing: .06em;
+    }
+    .prof-content h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.75rem;
+      font-weight: 700; color: var(--blue); margin-bottom: 1rem; line-height: 1.2;
+    }
+    .prof-content p { font-size: .92rem; color: var(--muted); line-height: 1.75; margin-bottom: 1rem; }
+    .prof-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+    .prof-tag {
+      font-family: 'DM Mono', monospace; font-size: .7rem;
+      padding: .3rem .75rem; border: 1px solid var(--border); border-radius: 4px;
+      color: var(--blue); letter-spacing: .04em;
+    }
+
+    /* ── MATERIAIS ── */
+    .mat-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      background: var(--border); margin-top: 2rem;
+    }
+    .mat-item {
+      background: var(--cream); padding: 1.75rem 1.5rem;
+    }
+    .mat-icon { font-size: 1.5rem; margin-bottom: .75rem; display: block; }
+    .mat-item h3 { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: .9rem; color: var(--blue); margin-bottom: .4rem; }
+    .mat-item p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq-list { margin-top: 2.5rem; border-top: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.2rem 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      text-align: left;
+    }
+    .faq-btn span.q {
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: .9rem;
+      color: var(--ink);
+    }
+    .faq-btn span.ico {
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--red);
+      flex-shrink: 0; line-height: 1; transition: transform .25s;
+    }
+    .faq-btn.open span.ico { transform: rotate(45deg); }
+    .faq-ans {
+      font-size: .85rem; color: var(--muted); line-height: 1.75;
+      padding: 0 0 1.2rem; max-width: 680px; display: none;
+    }
+    .faq-ans.open { display: block; }
+
+    /* ── INFO / PRICING ── */
+    .info-section {
+      background: var(--blue); border-radius: 24px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 380px;
+      margin-top: 2rem;
+    }
+    .info-left { padding: 3.5rem; }
+    .info-left h3 {
+      font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900;
+      color: #fff; margin-bottom: 1.5rem; line-height: 1.2;
+    }
+    .info-checks { list-style: none; }
+    .info-checks li {
+      display: flex; gap: .75rem; align-items: flex-start;
+      font-size: .9rem; color: rgba(255,255,255,.8);
+      padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .info-checks li:last-child { border: none; }
+    .info-checks li .ck { color: var(--red); flex-shrink: 0; font-size: 1rem; margin-top: .05rem; }
+    .info-right {
+      background: rgba(0,0,0,.2); padding: 3.5rem 2.5rem;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center;
+    }
+    .price-label { font-family: 'DM Mono', monospace; font-size: .7rem; color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+    .price-main { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: #fff; line-height: 1; }
+    .price-detail { font-size: .8rem; color: rgba(255,255,255,.45); margin: .4rem 0 2rem; }
+    .btn-price {
+      display: block; width: 100%;
+      background: var(--red); color: #fff; font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500; padding: 1rem;
+      border-radius: 10px; text-decoration: none; text-align: center;
+      transition: background .2s; margin-bottom: .75rem;
+    }
+    .btn-price:hover { background: var(--red-dk); }
+    .price-note { font-size: .72rem; color: rgba(255,255,255,.3); }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      text-align: center; padding: 6rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-final::before {
+      content: 'PYTHON';
+      position: absolute; font-family: 'Playfair Display', serif;
+      font-size: 18vw; font-weight: 900; color: rgba(30,58,138,.04);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      white-space: nowrap; pointer-events: none; user-select: none;
+    }
+    .cta-final h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(2.5rem,5vw,4.5rem);
+      font-weight: 900; color: var(--blue); line-height: 1.05; margin-bottom: 1rem;
+      position: relative;
+    }
+    .cta-final h2 em { font-style: italic; color: var(--red); }
+    .cta-final p { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; position: relative; }
+    .cta-final .actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      font-size: .78rem; color: rgba(26,26,26,.35);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ── BACK TO TOP ── */
+    #btnTop {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: var(--blue); color: #fff; border: none; cursor: pointer;
+      width: 40px; height: 40px; border-radius: 10px; font-size: .8rem;
+      display: none; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(30,58,138,.3);
+      transition: transform .2s;
+    }
+    #btnTop:hover { transform: translateY(-2px); }
+    #btnTop.show { display: flex; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .hero::after { display: none; }
+      .hero-card { position: static; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .para-grid { grid-template-columns: 1fr 1fr; }
+      .bonus-grid { grid-template-columns: 1fr 1fr; }
+      .prof-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .prof-img { aspect-ratio: 4/3; max-width: 280px; }
+      .mat-grid { grid-template-columns: 1fr 1fr; }
+      .info-section { grid-template-columns: 1fr; }
+      .info-right { padding: 2.5rem; }
+      .topnav { display: none; }
+      .mobile-btn { display: block; }
+    }
+    @media (max-width: 600px) {
+      .para-grid { grid-template-columns: 1fr; }
+      .bonus-grid { grid-template-columns: 1fr; }
+      .mat-grid { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+    }
+
+    /* mobile drawer */
+    #mobileDrawer {
+      display: none; flex-direction: column;
+      background: var(--cream); border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+    }
+    #mobileDrawer.open { display: flex; }
+    #mobileDrawer a {
+      padding: .6rem 0; font-size: .9rem; color: var(--blue);
+      text-decoration: none; border-bottom: 1px solid var(--border);
+    }
+    #mobileDrawer a:last-child { border: none; padding-top: .8rem; }
   </style>
 </head>
-<body class="bg-brand-cream text-brand-red font-body">
-  <!-- Substitua pela URL real do seu Google Form -->
-  <script>
-    const FORM_URL = "https://forms.gle/vFLm5ohBPs4STqbY8";
-  </script>
+<body>
 
-  <!-- Topbar fixa -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 shadow-brand">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="h-16 flex items-center justify-between gap-4">
-        <a href="#topo" data-scroll-to class="flex items-center gap-3">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl text-white gradient-hero shadow-brand">🐍</span>
-          <span class="font-display font-extrabold text-brand-blue leading-none">Python para Análise de Dados</span>
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#topo" class="logo">
+      <div class="logo-snake">🐍</div>
+      <span class="logo-text">Python · Análise de Dados</span>
+    </a>
+    <nav class="topnav">
+      <a href="#para-quem">Para quem</a>
+      <a href="#conteudo">Programa</a>
+      <a href="#bonus">Bônus</a>
+      <a href="#professora">Professora</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" class="btn-cta-sm">Inscreva-se</a>
+    <button class="mobile-btn" id="mobileToggle">Menu ☰</button>
+  </div>
+  <div id="mobileDrawer">
+    <a href="#para-quem" onclick="closeDrawer()">Para quem</a>
+    <a href="#conteudo" onclick="closeDrawer()">Programa</a>
+    <a href="#bonus" onclick="closeDrawer()">Bônus</a>
+    <a href="#professora" onclick="closeDrawer()">Professora</a>
+    <a href="#faq" onclick="closeDrawer()">FAQ</a>
+    <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" style="background:var(--blue);color:#fff;padding:.75rem 1rem;border-radius:8px;text-align:center;margin-top:.5rem;">Inscreva-se</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="topo">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow"><span></span>Turma · Maio 2026 · Mulheres 30+</div>
+      <h1 class="hero-title">
+        Python para<br/><em>Análise</em><br/>de Dados
+      </h1>
+      <p class="hero-sub">
+        Do zero ao portfólio em 8 semanas. Aprenda a manipular, analisar e visualizar dados com Python — mesmo que você nunca tenha programado antes.
+      </p>
+      <div class="hero-actions">
+        <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" class="btn-primary">
+          Garantir minha vaga →
         </a>
-
-        <nav class="hidden md:flex items-center gap-2">
-          <a href="#conteudo" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Programa</a>
-          <a href="#professora" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Professora</a>
-          <a href="#materiais" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Materiais</a>
-          <a href="#info importantes" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">Informações Importantes</a>
-          <a href="#faq" data-scroll-to class="px-3 py-2 rounded-xl hover:bg-brand-red/10 text-brand-red">FAQ</a>
-        </nav>
-
-        <div class="flex items-center gap-2">
-          <!-- Botão vira link para o Form -->
-          <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener"
-             class="hidden sm:inline-flex bg-brand-blue text-white px-4 py-2 rounded-xl font-display font-semibold shadow-brand hover:shadow-glow transition">
-            Inscreva-se
-          </a>
-          <button id="toggleSumario" class="md:hidden inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-brand-red/10 text-brand-red">
-            Sumário ☰
-          </button>
-        </div>
+        <a href="#conteudo" class="btn-ghost">Ver o programa</a>
       </div>
     </div>
-  </header>
 
-  <!-- Hero -->
-  <section id="topo" class="gradient-hero text-white rounded-b-brand shadow-brand relative overflow-hidden">
-    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-20 blur-2xl"
-      style="background: radial-gradient(60% 60% at 50% 50%, #ffffff 0%, rgba(255,255,255,0) 70%);"></div>
-    <div class="absolute -bottom-24 -left-24 w-[28rem] h-[28rem] rounded-full opacity-20 blur-2xl"
-      style="background: radial-gradient(60% 60% at 50% 50%, #ffffff 0%, rgba(255,255,255,0) 70%);"></div>
-
-    <div class="max-w-7xl mx-auto px-6 py-12">
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div class="max-w-3xl">
-          <div class="inline-flex items-center gap-2 bg-white/10 ring-1 ring-white/20 rounded-full px-4 py-2 mb-3">
-            <span class="text-lg">🎓</span><span class="text-sm tracking-wide">Curso Intermediário</span>
-          </div>
-          <h1 class="font-display font-extrabold leading-tight text-4xl sm:text-5xl mb-3">
-            Python para Análise de Dados
-          </h1>
-          <p class="text-brand-cream/95 text-lg leading-relaxed">
-            Domine manipulação, automação e dashboards com Python.
-          </p>
-          <p class="text-brand-cream/95 text-lg leading-relaxed">
-           Conteúdo focado no mundo real, com exercícios e projetos práticos.
-          </p>
-        </div>
-        <div class="shrink-0 flex flex-wrap gap-3">
-          <!-- Botão vira link para o Form -->
-          <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener"
-             class="inline-flex items-center justify-center bg-white text-brand-red px-6 py-3 rounded-2xl font-display font-semibold shadow-brand hover:shadow-glow transition">
-            Inscreva-se
-          </a>
-          <a href="#conteudo" data-scroll-to class="inline-flex items-center justify-center bg-white/10 text-white px-6 py-3 rounded-2xl font-display font-semibold ring-1 ring-white/30 hover:bg-white/20 transition">
-            Ver Conteúdo
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Layout principal -->
-  <main class="max-w-7xl mx-auto px-6 py-10">
-    <div class="grid lg:grid-cols-12 gap-8">
-      <article class="lg:col-span-12 space-y-12">
-        <!-- Introdução / Objetivos / Pré-requisitos -->
-        <section class="section-anchor">
-          <div class="grid md:grid-cols-3 gap-6">
-            <div id="introducao" class="bg-white rounded-3xl shadow-brand p-6">
-              <h2 class="font-display text-2xl text-brand-blue mb-3">Sobre o Curso</h2>
-              <p class="text-brand-red/90 leading-relaxed">
-O curso Python para Análise de Dados foi desenvolvido para quem quer aprender a manipular, analisar e visualizar dados com Python, mesmo sem ter experiência prévia em programação.
-Com uma abordagem prática e orientada a resultados, o curso ensina as principais bibliotecas utilizadas no mercado, sempre com datasets que simulam datasets reais e um mini-projeto final para consolidar o aprendizado.
-              </p>
-            </div>
-            <div id="objetivos" class="bg-white rounded-3xl shadow-brand p-6">
-              <h2 class="font-display text-2xl text-brand-blue mb-3">Objetivos</h2>
-              <ul class="list-disc pl-6 space-y-2 text-brand-red/90">
-                <li>Dominar a manipulação de dados com Pandas e NumPy.</li>
-                <li>Aplicar técnicas de limpeza, transformação e agregação.</li>
-                <li>Criar visualizações claras e informativas.</li>
-                <li>Estruturar projetos reprodutíveis e comunicáveis.</li>
-              </ul>
-            </div>
-            <div id="pre-requisitos" class="bg-white rounded-3xl shadow-brand p-6">
-              <h2 class="font-display text-2xl text-brand-blue mb-3">Pré-requisitos</h2>
-              <ul class="list-disc pl-6 space-y-2 text-brand-red/90">
-                <li>Curiosidade com dados e vontade de aprender fazendo.</li>
-                <li>Computador com Python 3.9+ e acesso à internet.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- Conteúdo -->
-        <section id="conteudo" class="section-anchor">
-          <h2 class="font-display text-3xl text-brand-red mb-6">Programa do Curso</h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 1 — Introdução à Análise de Dados</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Python para analise de dados - Fundamentos</li>
-                <li>Fluxo completo de análise de dados</li>
-                <li><strong>Mini-projeto:</strong> Carregar e analisar um dataset CSV</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 2 — Fundamentos do NumPy</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Criação e manipulação de arrays</li>
-                <li>Indexação, slicing e operações vetorizadas</li>
-                <li>Funções estatísticas básicas</li>
-                <li><strong>Mini-projeto:</strong> Analisar notas de alunos com NumPy</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 3 — Pandas: Manipulação de Dados</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Estruturas Series e DataFrame</li>
-                <li>Importação e exportação de dados (CSV, Excel, JSON)</li>
-                <li>Seleção, filtragem, ordenação e agrupamento</li>
-                <li><strong>Mini-projeto:</strong> Criar relatório de vendas usando Pandas</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 4 — Manipulação de Planilhas e Arquivos</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Leitura e escrita de planilhas Excel</li>
-                <li>Automação com openpyxl e os</li>
-                <li>Consolidar várias planilhas em um único relatório</li>
-                <li><strong>Mini-projeto:</strong> Relatório consolidado de diferentes meses</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 5 — Automação de Tarefas Repetitivas</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                 <li>Automação de relatórios com Pandas e Excel</li>
-                 <li>Envio automático de relatórios por email</li>
-                 <li>Download e upload de arquivos</li>
-                <li><strong> Mini-projeto:</strong> Script que gera e envia relatórios por email</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 6 — Visualização de Dados e Dashboard</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Introdução ao Matplotlib e Seaborn</li>
-                <li>Gráficos de linha, barra, pizza e dispersão</li>
-                <li>Heatmaps, boxplots e dashboards básicos</li>
-                <li><strong>Mini-projeto:</strong>Dashboard interativo com métricas chave</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 7 — Estatística Aplicada à Análise de Dados</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Medidas de tendência central e dispersão</li>
-                <li>Correlação e covariância</li>
-                <li>Identificação de outliers e anomalias</li>
-                <li><strong>Mini-projeto:</strong> Identificar padrões em dataset real</li>
-              </ul>
-            </div>
-            <div class="bg-white rounded-3xl shadow-brand p-6">
-              <h3 class="font-display text-brand-blue mb-2">Módulo 8 — Projeto Final Integrador</h3>
-              <ul class="list-disc pl-5 space-y-1 text-brand-red/90 text-sm">
-                <li>Escolha de um dataset real</li>
-                <li>Aplicar limpeza, manipulação e automação</li>
-                <li>Criar gráficos, dashboards e relatórios</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- Sobre a Professora -->
-        <section id="professora" class="section-anchor bg-white rounded-3xl shadow-brand p-8">
-          <h2 class="font-display text-3xl md:text-4xl text-brand-red mb-6 text-center md:text-left">
-            Sobre a Professora
-          </h2>
-
-          <div class="flex flex-col md:flex-row items-center md:items-start">
-            <div class="flex-shrink-0 md:mr-6 mb-6 md:mb-0">
-              <img src="./images/marcela.jpg"
-                   alt="Marcela dos Santos"
-                   class="w-64 h-64 rounded-2xl object-cover shadow-lg border-4 border-blue-100">
-            </div>
-
-            <div class="text-brand-blue/90">
-              <p class="mb-4 text-lg">
-                <strong>Doutoranda em Ciência da Computação e professora há mais de 14 anos.</strong>
-              </p>
-              <ul class="list-disc pl-5 space-y-2 text-base">
-                <li>Já ajudei desde iniciantes até pesquisadores a aprender e aplicar Python em seus projetos.</li>
-                <li>Atuei em projetos educacionais com Intel e Google, traduzindo tecnologia de forma clara e prática.</li>
-                <li>Crio conteúdos que ajudam professores, pesquisadores e profissionais a usar IA e programação para ganhar autonomia, economizar tempo e transformar seu trabalho.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- Materiais e Bônus -->
-        <section id="materiais" class="section-anchor bg-white rounded-3xl shadow-brand p-6">
-          <h2 class="font-display text-3xl text-brand-red mb-3">Materiais e Bônus</h2>
-          <div class="grid md:grid-cols-4 gap-6">
-            <div class="rounded-2xl bg-brand-red/5 p-4">
-              <h3 class="font-display text-brand-blue mb-1">📂 Kit de Automação</h3>
-              <p class="text-brand-red/90">Scripts prontos para gerar relatórios e consolidar planilhas.</p>
-            </div>
-            <div class="rounded-2xl bg-brand-red/5 p-4">
-              <h3 class="font-display text-brand-blue mb-1">📊 Template</h3>
-              <p class="text-brand-red/90">Modelo de dashboard interativo em Plotly e Seaborn.</p>
-            </div>
-            <div class="rounded-2xl bg-brand-red/5 p-4">
-              <h3 class="font-display text-brand-blue mb-1">✅ Checklist</h3>
-              <p class="text-brand-red/90">Fluxo completo de análise: limpeza → manipulação → visualização.</p>
-            </div>
-            <div class="rounded-2xl bg-brand-red/5 p-4">
-              <h3 class="font-display text-brand-blue mb-1">📚 Dicionário</h3>
-              <p class="text-brand-red/90">Guia rápido com os principais métodos do Pandas e NumPy.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- FAQ -->
-        <section id="faq" class="section-anchor bg-white rounded-3xl shadow-brand p-6">
-          <h2 class="font-display text-3xl text-brand-red mb-6">Perguntas Frequentes</h2>
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="bg-white rounded-2xl shadow-sm p-6">
-              <button class="w-full text-left flex items-center justify-between gap-3 faq-toggle" aria-expanded="false">
-                <span class="font-display text-brand-blue">Para quem é este curso?</span>
-                <span class="text-brand-red text-xl">+</span>
-              </button>
-              <div class="pt-3 hidden">
-                <p class="text-brand-red/90">Para quem já conhece o básico de Python e quer evoluir em análise de dados.</p>
-              </div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm p-6">
-              <button class="w-full text-left flex items-center justify-between gap-3 faq-toggle" aria-expanded="false">
-                <span class="font-display text-brand-blue">Quais ferramentas são usadas?</span>
-                <span class="text-brand-red text-xl">+</span>
-              </button>
-              <div class="pt-3 hidden">
-                <p class="text-brand-red/90">Python 3, Google Colab, Pandas, NumPy e bibliotecas de visualização.</p>
-              </div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm p-6">
-              <button class="w-full text-left flex items-center justify-between gap-3 faq-toggle" aria-expanded="false">
-                <span class="font-display text-brand-blue">Como acontecem as aulas?</span>
-                <span class="text-brand-red text-xl">+</span>
-              </button>
-              <div class="pt-3 hidden">
-                <p class="text-brand-red/90">Encontros online com prática e projetos guiados.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Investimento -->
-        <section id="infoimportante" class="section-anchor bg-white rounded-3xl shadow-brand p-8">
-          <h2 class="font-display text-3xl md:text-4xl text-brand-red mb-8 text-center">Informações Importantes</h2>
-
-          <div class="max-w-3xl mx-auto">
-            <div class="rounded-3xl p-8 border border-brand-red/20 shadow-lg bg-white">
-              <div class="space-y-2 text-lg text-brand-red font-display mb-8">
-                 <h3 class="font-semibold">✓ Investimento R$ 1097 (em até 3X) ou CA$ 319</h3>
-              </div>
-
-              <div class="space-y-2 text-lg text-brand-blue font-display mb-6">
-                <h3 class="font-semibold">✓ AS AULAS SÃO ONLINE E FICAM DISPONÍVEIS DURANTE O CURSO E MAIS 30 DIAS </h3>
-                <h3 class="font-semibold">✓ Aulas as quartas, inicio dia 6/05/2026 das 19:00 as 21:00 (horario do BR)</h3>
-                <h3 class="font-semibold">✓ 8 semanas de conteúdo prático (2h/semana)</h3>
-                <h3 class="font-semibold">✓ Plantão integrado na Semana 3</h3>
-                <h3 class="font-semibold">✓ Todos os materiais e bônus inclusos</h3>
-              </div>
-
-              <!-- Botão vira link para o Form -->
-              <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener"
-                 class="w-full inline-flex items-center justify-center bg-brand-blue text-white px-6 py-4 rounded-2xl font-display font-semibold text-lg shadow-brand hover:shadow-glow transition">
-                Quero me inscrever!!!!
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <!-- CTA final -->
-        <section id="inscricao" class="section-anchor">
-          <div class="bg-white rounded-3xl shadow-brand p-8 text-center">
-            <h2 class="font-display text-3xl text-brand-red mb-3">Pronto(a) para avançar?</h2>
-            <p class="text-brand-red/90 max-w-2xl mx-auto mb-6">Garanta sua vaga e dê o próximo passo na carreira com Python para análise de dados.</p>
-            <div class="flex flex-wrap items-center justify-center gap-3">
-              <!-- Botão vira link para o Form -->
-              <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener"
-                 class="bg-brand-blue text-white px-6 py-3 rounded-2xl font-display font-semibold shadow-brand hover:shadow-glow transition">
-                Inscreva-se agora
-              </a>
-              <a href="#topo" data-scroll-to class="px-6 py-3 rounded-2xl font-display font-semibold bg-brand-red/10 text-brand-red hover:bg-brand-red/15 transition">Voltar ao topo</a>
-            </div>
-          </div>
-        </section>
-      </article>
-    </div>
-  </main>
-
-  <!-- Toast (mantido para uso futuro, opcional) -->
-  <div id="toast" class="fixed top-4 right-4 z-50 hidden">
-    <div class="glass rounded-xl shadow-brand border border-white/50 px-4 py-3 flex items-start gap-3">
-      <div class="shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-blue" viewBox="0 0 20 20" fill="currentColor"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm.75 14.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9 6.5A1 1 0 0 1 10 5.5h.01A1 1 0 0 1 11 6.5v5a1 1 0 0 1-2 0Z"/></svg>
-      </div>
-      <div class="text-brand-blue/90 text-sm" id="toast-text">Ação concluída com sucesso.</div>
-      <button type="button" aria-label="Fechar" class="ml-2 text-brand-blue/70 hover:text-brand-blue" onclick="hideToast()">✕</button>
+    <!-- card lateral -->
+    <div class="hero-card">
+      <div class="hero-card-label">Investimento</div>
+      <div class="price-big">R$&nbsp;1.097</div>
+      <div class="price-sub">em até 3× &nbsp;·&nbsp; ou CA$ 319</div>
+      <ul class="card-checks">
+        <li><span class="chk">✓</span> Início 06/05/2026, quartas 19h–21h</li>
+        <li><span class="chk">✓</span> 8 semanas · 2h/semana ao vivo</li>
+        <li><span class="chk">✓</span> 90 dias de acesso às gravações</li>
+        <li><span class="chk">✓</span> Plantão de dúvidas na Semana 3</li>
+        <li><span class="chk">✓</span> 5 bônus de carreira: GitHub, apresentação, carreira, SQL + APIs e síndrome da impostora</li>
+        <li><span class="chk">✓</span> Kit de automação + templates</li>
+        <li><span class="chk">✓</span> Portfólio no GitHub ao final</li>
+      </ul>
+      <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" class="btn-card">Quero garantir minha vaga</a>
+      <p class="card-note">Vagas limitadas · Turma inicia 06/05/2026</p>
     </div>
   </div>
+</section>
 
-  <footer class="py-10 text-center text-brand-red/70">
-    <div class="max-w-7xl mx-auto px-6">
-      <p>&copy; <span id="year"></span> Python para Análise de Dados </p>
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">8</span><span class="stat-label">semanas de curso</span></div>
+    <div class="stat"><span class="stat-num">8</span><span class="stat-label">mini-projetos práticos</span></div>
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">bônus de carreira</span></div>
+    <div class="stat"><span class="stat-num">14+</span><span class="stat-label">anos ensinando</span></div>
+  </div>
+</div>
+
+<!-- PARA QUEM -->
+<section id="para-quem" class="section reveal">
+  <span class="section-label">01 — Para quem</span>
+  <h2 class="section-title">Este curso é para você se…</h2>
+  <p class="section-sub">Você não precisa ter experiência anterior. Precisa ter intenção.</p>
+
+  <div class="para-grid">
+    <div class="para-item">
+      <div class="para-item-icon">🔄</div>
+      <h3>Está em transição de carreira</h3>
+      <p>Trabalhou em outra área e quer migrar para dados com método — não só assistindo YouTube aleatoriamente.</p>
     </div>
-  </footer>
+    <div class="para-item">
+      <div class="para-item-icon">📊</div>
+      <h3>Usa Excel e quer ir além</h3>
+      <p>Já manipula planilhas no trabalho e quer automatizar tarefas que tomam horas do seu dia.</p>
+    </div>
+    <div class="para-item">
+      <div class="para-item-icon">🎯</div>
+      <h3>Quer uma vaga na área de dados</h3>
+      <p>Precisa de portfólio real, não só de certificado. O curso entrega os dois.</p>
+    </div>
+    <div class="para-item">
+      <div class="para-item-icon">⏰</div>
+      <h3>Tem vida intensa mas quer evoluir</h3>
+      <p>2h por semana ao vivo, gravações por 90 dias para assistir no seu ritmo.</p>
+    </div>
+    <div class="para-item">
+      <div class="para-item-icon">💡</div>
+      <h3>Tentou aprender sozinha e travou</h3>
+      <p>Ficou perdida sem direção clara? Aqui tem estrutura, plantão de dúvidas e comunidade.</p>
+    </div>
+    <div class="para-item">
+      <div class="para-item-icon">🌱</div>
+      <h3>Está começando do zero</h3>
+      <p>Nunca programou? O Módulo 1 foi desenhado para isso. Sem jargão, sem pressão.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- Botão flutuante voltar ao topo -->
-  <button id="btnTop" class="fixed bottom-5 right-5 hidden bg-brand-blue text-white px-3 py-2 rounded-xl shadow-brand hover:shadow-glow transition">Topo ↑</button>
+<!-- PROGRAMA -->
+<section id="conteudo" class="section reveal" style="background:rgba(30,58,138,.02);padding-top:4rem;padding-bottom:4rem;max-width:100%;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 2rem;">
+    <div class="programa-header">
+      <div>
+        <span class="section-label">02 — Programa</span>
+        <h2 class="section-title">8 módulos · Do setup ao portfólio</h2>
+        <p class="section-sub">Cada módulo termina com um mini-projeto aplicado em dados reais.</p>
+      </div>
 
-  <script>
-    // Ano
-    document.getElementById('year').textContent = new Date().getFullYear();
+    </div>
 
-    // Smooth scroll sem navegar a página
-    function smoothLinks() {
-      document.querySelectorAll('[data-scroll-to]').forEach(a => {
-        a.addEventListener('click', (e) => {
-          const href = a.getAttribute('href');
-          if (href && href.startsWith('#')) {
-            e.preventDefault();
-            const el = document.querySelector(href);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            const drawer = document.getElementById('drawer');
-            if (drawer) drawer.classList.add('hidden');
-          }
-        });
-      });
-    }
-    smoothLinks();
+    <div class="modulo-list">
 
-    // FAQ
-    document.querySelectorAll('.faq-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const content = btn.parentElement.querySelector('div');
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-        content.classList.toggle('hidden');
-        const icon = btn.querySelector('span.text-brand-red');
-        if (icon) icon.textContent = expanded ? '+' : '–';
-      });
+      <!-- M1 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">01</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Do zero ao primeiro dado analisado</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> <strong>Setup sem estresse:</strong> instalação, Google Colab e o que fazer quando travar</li>
+            <li><span class="dot">●</span> O que é análise de dados — e o que ela não é (desmistificando)</li>
+            <li><span class="dot">●</span> Fluxo completo de análise: do problema à resposta</li>
+            <li><span class="dot">●</span> Sua primeira linha de código: carregar e explorar um CSV</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Carregar e descrever um dataset real de sua escolha</div>
+        </div>
+      </div>
+
+      <!-- M2 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">02</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Fundamentos do NumPy</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> Criação e manipulação de arrays</li>
+            <li><span class="dot">●</span> Indexação, slicing e operações vetorizadas</li>
+            <li><span class="dot">●</span> Funções estatísticas básicas</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Analisar notas de alunos com NumPy</div>
+        </div>
+      </div>
+
+      <!-- M3 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">03</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Pandas: manipulação de dados</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> Estruturas Series e DataFrame</li>
+            <li><span class="dot">●</span> Importação e exportação (CSV, Excel, JSON)</li>
+            <li><span class="dot">●</span> Seleção, filtragem, ordenação e agrupamento</li>
+            <li><span class="dot" style="color:#16a34a;">★</span> <strong>Novo:</strong> Dados sujos na prática — nulos, duplicatas, formatos inconsistentes</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Relatório de vendas com dados propositalmente sujos para limpar</div>
+        </div>
+      </div>
+
+      <!-- M4 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">04</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Manipulação de planilhas e arquivos</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> Leitura e escrita de planilhas Excel</li>
+            <li><span class="dot">●</span> Automação com openpyxl e os</li>
+            <li><span class="dot">●</span> Consolidar várias planilhas em um único relatório</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Relatório consolidado de diferentes meses</div>
+        </div>
+      </div>
+
+      <!-- M5 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">05</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Automação de tarefas repetitivas</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot" style="color:#16a34a;">★</span> <strong>Novo:</strong> "Parece difícil, mas não é" — desmistificando automação</li>
+            <li><span class="dot">●</span> Automação de relatórios com Pandas e Excel</li>
+            <li><span class="dot">●</span> Envio automático de relatórios por email</li>
+            <li><span class="dot">●</span> Download e upload de arquivos</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Script que gera e envia relatórios por email</div>
+        </div>
+      </div>
+
+      <!-- M6 — era M7 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">06</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Estatística aplicada à análise de dados</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> Medidas de tendência central e dispersão</li>
+            <li><span class="dot">●</span> Correlação e covariância</li>
+            <li><span class="dot">●</span> Identificação de outliers e anomalias</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Identificar padrões em dataset real</div>
+        </div>
+      </div>
+
+      <!-- M7 — era M6 -->
+      <div class="modulo">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num">07</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Visualização de dados e dashboard</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> Introdução ao Matplotlib e Seaborn</li>
+            <li><span class="dot">●</span> Gráficos de linha, barra, pizza e dispersão</li>
+            <li><span class="dot">●</span> Heatmaps, boxplots e dashboards básicos</li>
+          </ul>
+          <div class="mini-proj"><strong>Mini-projeto:</strong> Dashboard interativo com métricas-chave</div>
+        </div>
+      </div>
+
+      <!-- M8 -->
+      <div class="modulo" style="border-color:var(--red);">
+        <button class="modulo-btn acc-mod">
+          <span class="modulo-num" style="color:var(--red);">08</span>
+          <div class="modulo-meta">
+            <div class="modulo-name">Projeto final integrador</div>
+            <div class="modulo-note">Sai com portfólio publicado e pitch pronto para recrutadores</div>
+          </div>
+          <span class="modulo-arrow">▾</span>
+        </button>
+        <div class="modulo-body">
+          <ul class="modulo-ul">
+            <li><span class="dot">●</span> Dataset temático: saúde da mulher, educação, mercado de trabalho feminino</li>
+            <li><span class="dot">●</span> Limpeza, manipulação e automação aplicadas</li>
+            <li><span class="dot">●</span> Gráficos, dashboards e relatórios</li>
+            <li><span class="dot" style="color:#16a34a;">★</span> <strong>Novo:</strong> Como documentar e apresentar para recrutadores e gestores</li>
+          </ul>
+          <div class="mini-proj"><strong>Entrega:</strong> Projeto publicado no GitHub com README profissional</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BÔNUS -->
+<section id="bonus" class="section reveal">
+  <span class="section-label">03 — Bônus exclusivos</span>
+  <h2 class="section-title">5 aulas para preparar<br/>você para o mercado real</h2>
+  <p class="section-sub">Não só para terminar o curso — para começar a carreira.</p>
+
+  <div class="bonus-grid">
+
+    <div class="bonus-card">
+      <span class="bonus-tag">B1 · Carreira</span>
+      <h3>Meu primeiro portfólio no GitHub</h3>
+      <p>Crie conta, suba o projeto final e escreva um README que recrutadores vão ler. Link pronto para o LinkedIn e currículo.</p>
+      <span class="bonus-result" style="background:#dcfce7;color:#166534;">Portfólio publicado e linkável</span>
+      <div class="bonus-num">B1</div>
+    </div>
+
+    <div class="bonus-card">
+      <span class="bonus-tag">B2 · Soft skill</span>
+      <h3>Como apresentar análises para quem não é técnico</h3>
+      <p>Storytelling com dados: contexto → achado → ação. Pitch de 5 min estruturado para gestores e recrutadores.</p>
+      <span class="bonus-result" style="background:#dbeafe;color:#1e40af;">Pitch de 5 min pronto</span>
+      <div class="bonus-num">B2</div>
+    </div>
+
+    <div class="bonus-card">
+      <span class="bonus-tag">B3 · Carreira</span>
+      <h3>Carreira em dados: mapa real para iniciantes</h3>
+      <p>Analista vs BI vs Cientista. O que estudar depois. LinkedIn para dados. Vagas júnior. Comunidades: PyLadies, Dados do Bem, WiDS.</p>
+      <span class="bonus-result" style="background:#fef3c7;color:#92400e;">Plano de 6 meses na mão</span>
+      <div class="bonus-num">B3</div>
+    </div>
+
+    <div class="bonus-card">
+      <span class="bonus-tag">B4 · Técnico</span>
+      <h3>SQL + APIs: as duas habilidades mais pedidas nas vagas</h3>
+      <p>SQL: SELECT, WHERE, JOIN, GROUP BY integrado com Pandas. APIs: consumir dados de fontes públicas (IBGE, clima, Spotify) com <code style="font-family:'DM Mono',monospace;font-size:.8em;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:3px;">requests</code> e analisar direto no notebook. Duas aulas, resultado imediato no currículo.</p>
+      <span class="bonus-result" style="background:#fee2e2;color:#991b1b;">SQL e APIs listáveis no currículo</span>
+      <div class="bonus-num">B4</div>
+    </div>
+
+    <div class="bonus-card" style="grid-column: span 2;">
+      <span class="bonus-tag">B5 · Mentalidade · Encontro ao vivo</span>
+      <h3>Vencendo a síndrome da impostora na área de dados</h3>
+      <p>Por que o ambiente tech pode parecer hostil e o que fazer com isso. Estratégias para não desistir quando o código não funciona. Roda de conversa ao vivo com ex-alunas que fizeram a transição. A principal causa de abandono em cursos tech por mulheres abordada de frente.</p>
+      <span class="bonus-result" style="background:#fce7f3;color:#9d174d;">Confiança construída com método</span>
+      <div class="bonus-num">B5</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROFESSORA -->
+<section id="professora" class="section reveal" style="border-top:1px solid var(--border);">
+  <span class="section-label">04 — Professora</span>
+  <div class="prof-grid">
+    <div class="prof-img-wrap">
+      <img src="./images/marcela.png" alt="Marcela dos Santos" class="prof-img"/>
+      <p class="prof-img-caption">MARCELA DOS SANTOS<br/>Doutora em Computação· Cientista · Professora</p>
+    </div>
+    <div class="prof-content">
+      <h3>14 anos ensinando quem tem medo de começar.</h3>
+      <p>Doutora em Ciência da Computação pela Université du Quebec a Chicoutimi (Canada), Marcela construiu uma carreira ajudando pessoas — de iniciantes a pesquisadores — a transformar seu trabalho com Python.</p>
+      <p>Atuou em projetos educacionais com <strong>Intel</strong> e <strong>Google</strong>, traduzindo tecnologia de forma clara e prática. Especialista em criar pontes entre o mundo técnico e as pessoas que precisam dele.</p>
+      <p>Neste curso, ela traz toda essa experiência com um foco específico: preparar mulheres 30+ para entrar na área de dados com confiança, método e resultado real.</p>
+      <div class="prof-tags">
+        <span class="prof-tag">Ciência da Computação</span>
+        <span class="prof-tag">14+ anos de ensino</span>
+        <span class="prof-tag">Google · Intel</span>
+        <span class="prof-tag">Python · IA</span>
+        <span class="prof-tag">Educação tecnológica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIAIS -->
+<section id="materiais" class="section reveal">
+  <span class="section-label">05 — Materiais inclusos</span>
+  <h2 class="section-title">Tudo que você precisa<br/>para continuar depois</h2>
+  <div class="mat-grid">
+    <div class="mat-item">
+      <span class="mat-icon">📂</span>
+      <h3>Kit de Automação</h3>
+      <p>Scripts prontos para gerar relatórios e consolidar planilhas — para usar no trabalho desde a primeira semana.</p>
+    </div>
+    <div class="mat-item">
+      <span class="mat-icon">📊</span>
+      <h3>Template de Dashboard</h3>
+      <p>Modelo interativo em Plotly e Seaborn pronto para adaptar ao seu contexto.</p>
+    </div>
+    <div class="mat-item">
+      <span class="mat-icon">✅</span>
+      <h3>Checklist de Análise</h3>
+      <p>Fluxo completo: limpeza → manipulação → visualização. Para nunca esquecer nenhuma etapa.</p>
+    </div>
+    <div class="mat-item">
+      <span class="mat-icon">📚</span>
+      <h3>Dicionário Pandas & NumPy</h3>
+      <p>Guia rápido com os principais métodos para consultar sempre que precisar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section reveal" style="border-top:1px solid var(--border);">
+  <span class="section-label">06 — Dúvidas frequentes</span>
+  <h2 class="section-title">Perguntas frequentes</h2>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-btn" data-faq>
+        <span class="q">Para quem é este curso?</span>
+        <span class="ico">+</span>
+      </button>
+      <div class="faq-ans">Para mulheres 30+ que querem entrar na área de dados — em transição de carreira ou buscando evoluir na função atual. <strong>Não é necessário ter experiência prévia em Python.</strong> O Módulo 1 cobre o que você precisa para começar do zero.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" data-faq>
+        <span class="q">Quais ferramentas são usadas?</span>
+        <span class="ico">+</span>
+      </button>
+      <div class="faq-ans">Python 3, Google Colab (sem instalação complicada, funciona direto no navegador), Pandas, NumPy, Matplotlib, Seaborn e Plotly. Tudo gratuito.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" data-faq>
+        <span class="q">Como acontecem as aulas?</span>
+        <span class="ico">+</span>
+      </button>
+      <div class="faq-ans">Aulas ao vivo toda quarta-feira das 19h às 21h (horário de Brasília), a partir de 06/05/2026. As gravações ficam disponíveis por <strong>90 dias</strong> após o encerramento — para você rever no seu ritmo.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" data-faq>
+        <span class="q">Quanto tempo preciso por semana?</span>
+        <span class="ico">+</span>
+      </button>
+      <div class="faq-ans">2h de aula ao vivo por semana, mais o tempo que você quiser dedicar aos mini-projetos. O curso foi desenhado para quem tem vida intensa — mãe, trabalho, rotina cheia.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" data-faq>
+        <span class="q">Vou sair com portfólio?</span>
+        <span class="ico">+</span>
+      </button>
+      <div class="faq-ans">Sim. O Projeto Final + o Bônus 1 (GitHub) garantem que você sai com um projeto publicado, linkável no LinkedIn e no currículo. Algo concreto para mostrar em entrevistas.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" data-faq>
+        <span class="q">Tem suporte durante o curso?</span>
+        <span class="ico">+</span>
+      </button>
+      <div class="faq-ans">Sim. Plantão de dúvidas integrado na Semana 3. Além disso, a professora está disponível para suporte direto ao longo das 8 semanas.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFORMAÇÕES / PRICING -->
+<section class="section reveal" style="padding-top:0;">
+  <span class="section-label">07 — Investimento</span>
+  <div class="info-section">
+    <div class="info-left">
+      <h3>Tudo incluído na sua inscrição</h3>
+      <ul class="info-checks">
+        <li><span class="ck">✓</span> Aulas ao vivo toda quarta, início 06/05/2026 — 19h às 21h (Brasília)</li>
+        <li><span class="ck">✓</span> 8 semanas de conteúdo prático, 2h/semana</li>
+        <li><span class="ck">✓</span> 90 dias de acesso às gravações após o encerramento</li>
+        <li><span class="ck">✓</span> Plantão de dúvidas na Semana 3</li>
+        <li><span class="ck">✓</span> 5 bônus de carreira: GitHub, apresentação, carreira, SQL + APIs e síndrome da impostora</li>
+        <li><span class="ck">✓</span> Kit de automação, template de dashboard, checklist e dicionário</li>
+        <li><span class="ck">✓</span> Projeto final com portfólio publicado</li>
+      </ul>
+    </div>
+    <div class="info-right">
+      <div class="price-label">investimento único</div>
+      <div class="price-main">R$&nbsp;1.097</div>
+      <div class="price-detail">em até 3× sem juros &nbsp;·&nbsp; ou CA$ 317</div>
+      <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" class="btn-price">Garantir minha vaga →</a>
+      <p class="price-note">Vagas limitadas · Turma inicia 06/05/2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div style="max-width:1200px;margin:0 auto;padding:0 2rem;">
+  <div class="cta-final reveal">
+    <h2>Pronta para<br/><em>avançar?</em></h2>
+    <p>Você tem 30+, tem experiência de vida, tem contexto. Agora você vai ter a habilidade técnica para transformar tudo isso em carreira em dados.</p>
+    <div class="actions">
+      <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" class="btn-primary">Inscreva-se agora →</a>
+      <a href="#conteudo" class="btn-ghost">Ver o programa completo</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; <span id="year"></span> Python para Análise de Dados · Todos os direitos reservados</p>
+</footer>
+
+<!-- back to top -->
+<button id="btnTop">↑</button>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // mobile drawer
+  document.getElementById('mobileToggle').addEventListener('click', () => {
+    document.getElementById('mobileDrawer').classList.toggle('open');
+  });
+  function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); }
+
+  // accordion módulos
+  document.querySelectorAll('.acc-mod').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = btn.nextElementSibling;
+      const arrow = btn.querySelector('.modulo-arrow');
+      const isOpen = body.classList.contains('open');
+      document.querySelectorAll('.modulo-body.open').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.modulo-arrow.open').forEach(a => a.classList.remove('open'));
+      if (!isOpen) { body.classList.add('open'); arrow.classList.add('open'); }
     });
+  });
 
-    // Toast helpers (opcional)
-    let toastTimer = null;
-    function showToast(msg = 'Ação concluída!') {
-      const t = document.getElementById('toast');
-      const txt = document.getElementById('toast-text');
-      if (!t || !txt) return;
-      txt.textContent = msg;
-      t.classList.remove('hidden');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => hideToast(), 3000);
-    }
-    function hideToast() {
-      const t = document.getElementById('toast');
-      if (t) t.classList.add('hidden');
-    }
-
-    // Botão flutuante Topo
-    const btnTop = document.getElementById('btnTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 600) btnTop.classList.remove('hidden'); else btnTop.classList.add('hidden');
+  // FAQ
+  document.querySelectorAll('[data-faq]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ans = btn.nextElementSibling;
+      const ico = btn.querySelector('.ico');
+      const open = ans.classList.contains('open');
+      document.querySelectorAll('.faq-ans.open').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-btn.open').forEach(b => { b.classList.remove('open'); b.querySelector('.ico').textContent = '+'; });
+      if (!open) { ans.classList.add('open'); btn.classList.add('open'); ico.textContent = '+'; }
     });
-    btnTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+  });
 
-  <!-- (removido) Modal de inscrição e JS relacionados -->
-  <!-- (removido) Script Cloudflare obsoleto do desafio -->
+  // back to top
+  const btnTop = document.getElementById('btnTop');
+  window.addEventListener('scroll', () => btnTop.classList.toggle('show', window.scrollY > 500));
+  btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // reveal on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
-
-
