@@ -301,6 +301,8 @@
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
       margin-top: 3rem;
     }
+    .bonus-card-wide { grid-column: span 2; }
+    @media (max-width: 900px) { .bonus-card-wide { grid-column: span 1; } }
     .bonus-card {
       background: #fff; border: 1px solid var(--border); border-radius: 16px;
       padding: 1.75rem; position: relative; overflow: hidden;
@@ -570,7 +572,7 @@
     <div class="hero-card">
       <div class="hero-card-label">Investimento</div>
       <div class="price-big">R$&nbsp;1.097</div>
-      <div class="price-sub">em até 3× &nbsp;·&nbsp; ou CA$ 317</div>
+      <div class="price-sub">em até 3× &nbsp;·&nbsp; ou CA$ 319</div>
       <ul class="card-checks">
         <li><span class="chk">✓</span> Início 06/05/2026, quartas 19h–21h</li>
         <li><span class="chk">✓</span> 8 semanas · 2h/semana ao vivo</li>
@@ -598,6 +600,7 @@
 
 <!-- PARA QUEM -->
 <section id="para-quem" class="section reveal">
+
   <h2 class="section-title">Este curso é para você se…</h2>
   <p class="section-sub">Você não precisa ter experiência anterior. Precisa ter intenção.</p>
 
@@ -640,7 +643,8 @@
   <div style="max-width:1200px;margin:0 auto;padding:0 2rem;">
     <div class="programa-header">
       <div>
-       <h2 class="section-title">8 módulos · Do setup ao portfólio</h2>
+
+        <h2 class="section-title">8 módulos · Do setup ao portfólio</h2>
         <p class="section-sub">Cada módulo termina com um mini-projeto aplicado em dados reais.</p>
       </div>
 
@@ -701,7 +705,7 @@
             <li><span class="dot">●</span> Estruturas Series e DataFrame</li>
             <li><span class="dot">●</span> Importação e exportação (CSV, Excel, JSON)</li>
             <li><span class="dot">●</span> Seleção, filtragem, ordenação e agrupamento</li>
-            <li><span class="dot">●</span> Dados sujos na prática — nulos, duplicatas, formatos inconsistentes</li>
+            <li><span class="dot" style="color:#16a34a;">★</span> <strong>Novo:</strong> Dados sujos na prática — nulos, duplicatas, formatos inconsistentes</li>
           </ul>
           <div class="mini-proj"><strong>Mini-projeto:</strong> Relatório de vendas com dados propositalmente sujos para limpar</div>
         </div>
@@ -737,7 +741,7 @@
         </button>
         <div class="modulo-body">
           <ul class="modulo-ul">
-            <li><span class="dot">●</span>"Parece difícil, mas não é" — desmistificando automação</li>
+            <li><span class="dot" style="color:#16a34a;">★</span> <strong>Novo:</strong> "Parece difícil, mas não é" — desmistificando automação</li>
             <li><span class="dot">●</span> Automação de relatórios com Pandas e Excel</li>
             <li><span class="dot">●</span> Envio automático de relatórios por email</li>
             <li><span class="dot">●</span> Download e upload de arquivos</li>
@@ -811,6 +815,7 @@
 
 <!-- BÔNUS -->
 <section id="bonus" class="section reveal">
+
   <h2 class="section-title">5 aulas para preparar<br/>você para o mercado real</h2>
   <p class="section-sub">Não só para terminar o curso — para começar a carreira.</p>
 
@@ -848,10 +853,10 @@
       <div class="bonus-num">B4</div>
     </div>
 
-    <div class="bonus-card" style="grid-column: span 2;">
+    <div class="bonus-card bonus-card-wide">
       <span class="bonus-tag">B5 · Mentalidade · Encontro ao vivo</span>
       <h3>Vencendo a síndrome da impostora na área de dados</h3>
-      <p>Por que o ambiente tech pode parecer hostil e o que fazer com isso. Estratégias para não desistir quando o código não funciona. Roda de conversa com mulheres que trabalham na área de Tecnologia. A principal causa de abandono em cursos tech por mulheres abordada de frente.</p>
+      <p>Por que o ambiente tech pode parecer hostil e o que fazer com isso. Estratégias para não desistir quando o código não funciona. Roda de conversa ao vivo com ex-alunas que fizeram a transição. A principal causa de abandono em cursos tech por mulheres abordada de frente.</p>
       <span class="bonus-result" style="background:#fce7f3;color:#9d174d;">Confiança construída com método</span>
       <div class="bonus-num">B5</div>
     </div>
@@ -861,14 +866,15 @@
 
 <!-- PROFESSORA -->
 <section id="professora" class="section reveal" style="border-top:1px solid var(--border);">
-   <div class="prof-grid">
+
+  <div class="prof-grid">
     <div class="prof-img-wrap">
-      <img src="./images/marcela.png" alt="Marcela dos Santos" class="prof-img"/>
-      <p class="prof-img-caption">MARCELA DOS SANTOS<br/>Doutora em Computação· Cientista · Professora</p>
+      <img src="./images/marcela.jpg" alt="Marcela dos Santos" class="prof-img"/>
+      <p class="prof-img-caption">MARCELA DOS SANTOS<br/>Doutoranda · Cientista · Professora</p>
     </div>
     <div class="prof-content">
       <h3>14 anos ensinando quem tem medo de começar.</h3>
-      <p>Doutora em Ciência da Computação pela Université du Quebec a Chicoutimi (Canada), Marcela construiu uma carreira ajudando pessoas — de iniciantes a pesquisadores — a transformar seu trabalho com Python.</p>
+      <p>Doutoranda em Ciência da Computação, Marcela construiu uma carreira ajudando pessoas — de iniciantes a pesquisadores — a transformar seu trabalho com Python.</p>
       <p>Atuou em projetos educacionais com <strong>Intel</strong> e <strong>Google</strong>, traduzindo tecnologia de forma clara e prática. Especialista em criar pontes entre o mundo técnico e as pessoas que precisam dele.</p>
       <p>Neste curso, ela traz toda essa experiência com um foco específico: preparar mulheres 30+ para entrar na área de dados com confiança, método e resultado real.</p>
       <div class="prof-tags">
@@ -884,7 +890,8 @@
 
 <!-- MATERIAIS -->
 <section id="materiais" class="section reveal">
-   <h2 class="section-title">Tudo que você precisa<br/>para continuar depois</h2>
+
+  <h2 class="section-title">Tudo que você precisa<br/>para continuar depois</h2>
   <div class="mat-grid">
     <div class="mat-item">
       <span class="mat-icon">📂</span>
@@ -911,6 +918,7 @@
 
 <!-- FAQ -->
 <section id="faq" class="section reveal" style="border-top:1px solid var(--border);">
+
   <h2 class="section-title">Perguntas frequentes</h2>
   <div class="faq-list">
 
@@ -967,7 +975,8 @@
 
 <!-- INFORMAÇÕES / PRICING -->
 <section class="section reveal" style="padding-top:0;">
-   <div class="info-section">
+
+  <div class="info-section">
     <div class="info-left">
       <h3>Tudo incluído na sua inscrição</h3>
       <ul class="info-checks">
@@ -983,7 +992,7 @@
     <div class="info-right">
       <div class="price-label">investimento único</div>
       <div class="price-main">R$&nbsp;1.097</div>
-      <div class="price-detail">em até 3× sem juros &nbsp;·&nbsp; ou CA$ 317</div>
+      <div class="price-detail">em até 3× sem juros &nbsp;·&nbsp; ou CA$ 319</div>
       <a href="https://pay.hotmart.com/I105484567F?off=zu4tw9wb&bid=1776768785591" target="_blank" rel="noopener" class="btn-price">Garantir minha vaga →</a>
       <p class="price-note">Vagas limitadas · Turma inicia 06/05/2026</p>
     </div>
